@@ -1,6 +1,6 @@
 <?php
 
-$function = ($_POST['function']);
+$function = $_POST['function'];
 $postHandler = new PostsHandler;
 switch ($function) {
     case 'add':
@@ -17,7 +17,7 @@ class PostsHandler
         $postModel = new PostModel;
         $phoneNumber = ($_POST['phone_number']);
         $user_token = ($_POST['user_token']);
-        $postModel->setImages($_POST['images']);
+        $postModel->setImages(json_decode($_POST['images']));
         $postModel->setCategoryId($_POST['category_id']);
         $postModel->setSubCategory($_POST['sub_category']);
         $postModel->setDescription($_POST['description']);
@@ -35,8 +35,7 @@ class PostsHandler
             echo $postValidation;
             return;
         }
-
-        $dbController->addPost($postModel)?'success':'fail';
+        echo $dbController->addPost($postModel)?'success':'fail';
     }
     public function checkPostValidation(PostModel $postModel)
     {
@@ -69,17 +68,17 @@ class PostsHandler
 }
 class PostModel
 {
-    private int $post_id;
-    private int $user_id;
-    private int $category_id;
-    private String $sub_category;
-    private String $description;
-    private String $country;
-    private String $city;
-    private String $is_removed;
-    private String $remove_id;
-    private array $images;
-    private array $images_urls;
+    private $post_id;
+    private $user_id;
+    private $category_id;
+    private $sub_category;
+    private $description;
+    private $country;
+    private $city;
+    private $is_removed;
+    private $remove_id;
+    private $images;
+    private $images_urls;
 
     public function setPostId(int $post_id)
     {
@@ -137,7 +136,7 @@ class PostModel
     {
         return $this->city;
     }
-    public function setImages(string $images)
+    public function setImages(array $images)
     {
         $this->images = $images;
     }
