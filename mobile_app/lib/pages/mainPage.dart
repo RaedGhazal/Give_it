@@ -8,9 +8,32 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        bottomNavigationBar: TabBar(
+          tabs: [
+            Tab(
+              child: Text('Home'),
+              icon: Icon(Icons.home),
+            ),
+            Tab(
+              child: Text('Add post'),
+              icon: Icon(Icons.home),
+            ),
+            Tab(
+              child: Text('Settings'),
+              icon: Icon(Icons.home),
+            ),
+          ],
+        ),
+        body: TabBarView(
+          children: [
+            HomePage(),
+            AddPostPage(),
+            SettingsPage(),
+          ],
+        ),
       ),
     );
   }
