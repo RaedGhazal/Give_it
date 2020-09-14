@@ -11,7 +11,7 @@ class _MainPageState extends State<MainPage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        bottomNavigationBar: TabBar(
+        bottomNavigationBar: const TabBar(
           tabs: [
             Tab(
               child: Text('Home'),
@@ -19,11 +19,11 @@ class _MainPageState extends State<MainPage> {
             ),
             Tab(
               child: Text('Add post'),
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.add),
             ),
             Tab(
               child: Text('Settings'),
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.settings),
             ),
           ],
         ),
