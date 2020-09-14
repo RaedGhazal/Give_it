@@ -8,6 +8,13 @@ const lightGrey = const Color(0xff989898);
 
 //default app theme.
 final defaultTheme = ThemeData(
+    textTheme: TextTheme(
+      headline6: GoogleFonts.playfairDisplay(
+        color: lightGrey,
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
     appBarTheme: AppBarTheme(
       color: Colors.white,
       textTheme: TextTheme(
