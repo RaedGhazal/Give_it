@@ -26,10 +26,10 @@ class PostsHandler
 
         $dbController = new DatabaseController;
         if (!($dbController->checkPhoneAndToken($phoneNumber, $user_token))) {
-            echo 'wront phone number or token!';
+            echo 'wrong phone number or token!';
             return;
         }
-
+        $postModel->setUserId($dbController->getUserIdByToken($user_token));
         $postValidation = $this->checkPostValidation($postModel);
         if (!($postValidation === true)) {
             echo $postValidation;
@@ -42,6 +42,10 @@ class PostsHandler
     {
         $dbController = new DatabaseController;
 
+        if($postModel->getUserId()===-1)
+        {
+            return 'user doesn not exist!';
+        }
         if (sizeof($postModel->getImages()) === 0) {
             return 'no images provided!';
         }

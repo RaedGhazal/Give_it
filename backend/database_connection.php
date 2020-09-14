@@ -1,9 +1,9 @@
 <?php
 
-$username = '';
-$password = '';
-$host = '';
-$db_name = '';
+$username = 'arqaa_teamGiveit';
+$password = 'ATGiveItProject1292020';
+$host = 'raedghazal.com';
+$db_name = 'arqaamso_giveit_db';
 
 $connection = mysqli_connect($host, $username, $password, $db_name);
 if (!$connection)
@@ -44,7 +44,7 @@ $create_images_table = "CREATE TABLE images (
     image_url varchar(300) NOT NULL,
     PRIMARY KEY (image_id)
    )";
-mysqli_query($connection, $create_posts_table);
+mysqli_query($connection, $create_images_table);
 
 $create_categories_table = "CREATE TABLE categories (
     category_id int(11) NOT NULL AUTO_INCREMENT,
