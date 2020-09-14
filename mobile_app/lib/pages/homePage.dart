@@ -6,13 +6,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text('Home'),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: grey,
+          ),
+          onPressed: (){
+            _scaffoldKey.currentState.openDrawer();
+          },
+        ),
       ),
-
+      drawer: Drawer(),
+      floatingActionButton: LemonFloatingButton(),
       body: Center(
         child: Text('HomePage'),
       ),
