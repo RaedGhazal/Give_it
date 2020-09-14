@@ -2,16 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
-import 'pages/pages.dart';
+
 import 'themes.dart';
 
 void main() {
@@ -38,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       routes: <String, WidgetBuilder>{
         'home': (context) => HomePage(),
         'signUp': (context) => SignUpPage(),
-        'addPost': (Context) => AddPostPage(),
+        'addPost': (context) => AddPostPage(),
       },
     );
   }

@@ -60,6 +60,7 @@ class RoundedDropDownButton<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 60,
       decoration: const ShapeDecoration(
         shape: RoundedRectangleBorder(
           side: BorderSide(

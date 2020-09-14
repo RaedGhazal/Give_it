@@ -60,4 +60,5 @@ final defaultTheme = ThemeData(
       ),
     ),
   ),
+  indicatorColor: grey,
 );

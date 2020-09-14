@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 //TODO: Add implementation.
-void addPost({
+Future<void> addPost({
   @required String phoneNumber,
   @required String userToken,
   @required List<List<String>> images,
