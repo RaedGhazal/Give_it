@@ -38,7 +38,7 @@ $create_posts_table = "CREATE TABLE IF NOT EXISTS posts (
    )";
 mysqli_query($connection, $create_posts_table);
 
-$create_images_table = "CREATE TABLE images (
+$create_images_table = "CREATE TABLE IF NOT EXISTS images (
     image_id int(11) NOT NULL AUTO_INCREMENT,
     post_id int(11) NOT NULL,
     image_url varchar(300) NOT NULL,
@@ -46,7 +46,7 @@ $create_images_table = "CREATE TABLE images (
    )";
 mysqli_query($connection, $create_images_table);
 
-$create_categories_table = "CREATE TABLE categories (
+$create_categories_table = "CREATE TABLE IF NOT EXISTS categories (
     category_id int(11) NOT NULL AUTO_INCREMENT,
     category_name varchar(50) NOT NULL,
     PRIMARY KEY (category_id),

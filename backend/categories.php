@@ -1,6 +1,6 @@
 <?php
 
-$function = $_POST["function"];
+$function = "get_all";//$_POST["function"];
 $categoryHandler = new CategoryHandler;
 switch ($function) {
     case 'get_all':
@@ -14,7 +14,12 @@ class CategoryHandler
 
     public function getAllCategories()
     {
-        return (new DatabaseController)->getAllCategories();
+        include 'database_controller.php';
+        echo (new DatabaseController)->getAllCategories();
+    }
+    public function getCategoriesByCondition()
+    {
+        
     }
 }
 ?>

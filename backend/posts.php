@@ -6,6 +6,8 @@ switch ($function) {
     case 'add':
         $postHandler->addPost();
         break;
+    case 'getAll':
+
     default:
         echo 'wrong function !';
 }
@@ -36,6 +38,10 @@ class PostsHandler
             return;
         }
         echo $dbController->addPost($postModel)?'success':'fail';
+    }
+    public function getAllPosts()
+    {
+        
     }
     public function checkPostValidation(PostModel $postModel)
     {

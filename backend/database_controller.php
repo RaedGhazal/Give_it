@@ -73,14 +73,19 @@ class DatabaseController
     }
     public function getAllCategories()
     {
-        //TODO finish getting all categories
         include 'database_connection.php';
         $query = "select * from categories";
         $result = mysqli_query($connection,$query);
+        $categories = array();
         if($result->num_rows>0)
         {
-
+            for($i;$i<$result->num_rows;$i++){
+                $row = $result->fetch_assoc();
+                $category_id = $row['category_id'];
+                $category_name = $row['category_name'];
+                $categories[$category_id] = $category_name;
+            }
         }
+        return $categories;
     }
 }
-?>
