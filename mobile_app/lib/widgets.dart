@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pages/pages.dart';
 
+import 'pages/pages.dart';
 import 'themes.dart';
 
 void showSnackBar(
@@ -20,13 +21,18 @@ void showSnackBar(
 }
 
 class LemonFloatingButton extends StatelessWidget {
-  const LemonFloatingButton();
+  final GlobalKey<ScaffoldState> homeScaffoldKey;
+
+  const LemonFloatingButton(this.homeScaffoldKey);
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.pushNamed(context, 'addPost');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddPostPage(homeScaffoldKey)));
       },
       backgroundColor: grey,
       tooltip: 'Add new post',

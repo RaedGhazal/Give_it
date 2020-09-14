@@ -19,13 +19,13 @@ class _HomePageState extends State<HomePage> {
             Icons.menu,
             color: grey,
           ),
-          onPressed: (){
+          onPressed: () {
             _scaffoldKey.currentState.openDrawer();
           },
         ),
       ),
       drawer: Drawer(),
-      floatingActionButton: LemonFloatingButton(),
+      floatingActionButton: LemonFloatingButton(_scaffoldKey),
       body: Center(
         child: Text('HomePage'),
       ),

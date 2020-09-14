@@ -26,11 +26,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       theme: defaultTheme,
-      routes: <String, WidgetBuilder>{
-        'home': (context) => HomePage(),
-        'signUp': (context) => SignUpPage(),
-        'addPost': (context) => AddPostPage(),
-      },
     );
   }
 }

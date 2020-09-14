@@ -2,8 +2,9 @@ part of pages;
 
 class AddPostBody extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final GlobalKey<ScaffoldState> homeScaffoldKey;
 
-  AddPostBody(this.scaffoldKey);
+  AddPostBody(this.scaffoldKey, this.homeScaffoldKey);
 
   @override
   _AddPostBodyState createState() => _AddPostBodyState();
@@ -104,27 +105,31 @@ class _AddPostBodyState extends State<AddPostBody> {
               Row(
                 children: [
                   //Category
-                  Expanded(
-                    flex: 1,
-                    child: RoundedDropDownButton(
-                      DropdownButton<String>(
-                        hint: Text('Category'),
-                        value: category,
-                        items: <DropdownMenuItem<String>>[
-                          for (int i = 0; i < categories.length; i++)
-                            DropdownMenuItem<String>(
-                              value: categories[i],
-                              child: Text(categories[i]),
-                            )
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            category = value;
-                          });
-                        },
+                  FutureBuilder(future: getAllCategories(),builder: (context, snap) {
+                    //TODO: FIX THIS :)
+                    getAllCategories();
+                    return Expanded(
+                      flex: 1,
+                      child: RoundedDropDownButton(
+                        DropdownButton<String>(
+                          hint: Text('Category'),
+                          value: category,
+                          items: <DropdownMenuItem<String>>[
+                            for (int i = 0; i < categories.length; i++)
+                              DropdownMenuItem<String>(
+                                value: categories[i],
+                                child: Text(categories[i]),
+                              )
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              category = value;
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
 
                   const SizedBox(
                     width: 15,
@@ -223,9 +228,22 @@ class _AddPostBodyState extends State<AddPostBody> {
                     city: location.governorate,
                     description: _descriptionController.text.trim(),
                   ).then((value) {
-                    Navigator.pop(context);
-                  }).then((value) => Navigator.of(context).pop());
+                    if (widget.homeScaffoldKey?.currentState != null) {
+                      showSnackBar(widget.homeScaffoldKey,
+                          color: Colors.green, content: 'Post uploaded');
+                    }
+                  }).catchError((onError) {
+                    if (widget.homeScaffoldKey?.currentState != null) {
+                      showSnackBar(widget.homeScaffoldKey,
+                          color: Colors.red,
+                          content: 'Error : your post cannot be uploaded');
+                    }
+                  });
 
+                  await Navigator.maybePop(context);
+                  showSnackBar(widget.homeScaffoldKey,
+                      color: Colors.red,
+                      content: 'green : your post is under be processing');
                   setState(() {});
                 },
               ),
@@ -247,7 +265,8 @@ class _AddPostBodyState extends State<AddPostBody> {
               ),
               color: grey,
               onPressed: () async {
-                await Navigator.pushNamed(context, 'signUp');
+                await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()));
                 setState(() {});
               },
             ),
@@ -259,6 +278,10 @@ class _AddPostBodyState extends State<AddPostBody> {
 }
 
 class AddPostPage extends StatefulWidget {
+  final GlobalKey<ScaffoldState> homeScaffoldKey;
+
+  const AddPostPage(this.homeScaffoldKey);
+
   @override
   _AddPostPageState createState() => _AddPostPageState();
 }
@@ -273,7 +296,7 @@ class _AddPostPageState extends State<AddPostPage> {
       appBar: AppBar(
         title: Text('Add post'),
       ),
-      body: AddPostBody(_scaffoldKey),
+      body: AddPostBody(_scaffoldKey, widget.homeScaffoldKey),
     );
   }
 }

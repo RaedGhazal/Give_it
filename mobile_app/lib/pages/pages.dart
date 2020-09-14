@@ -14,6 +14,7 @@ import '../themes.dart';
 import '../widgets.dart';
 import '../models/account.dart';
 import '../models/database.dart';
+import '../widgets.dart';
 
 //All app pages
 part 'signUpPage.dart';
