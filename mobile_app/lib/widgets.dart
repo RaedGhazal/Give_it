@@ -26,10 +26,7 @@ class LemonFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AddPostPage()),
-        );
+        Navigator.pushNamed(context, 'addPost');
       },
       backgroundColor: grey,
       tooltip: 'Add new post',
@@ -139,7 +136,9 @@ class MyForm extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
-        decoration: InputDecoration(labelText: labelText),
+        decoration: InputDecoration(
+          labelText: labelText,
+        ),
       ),
     );
   }

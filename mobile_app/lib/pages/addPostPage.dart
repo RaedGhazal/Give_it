@@ -35,42 +35,41 @@ class _AddPostBodyState extends State<AddPostBody> {
             style: Theme.of(context).textTheme.bodyText1,
           ),
           Container(
-            height: 250,
+            height: 100,
             width: double.infinity,
-            child: GridView(
-              scrollDirection: Axis.vertical,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                childAspectRatio: 1,
-              ),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
-                GestureDetector(
-                  child: Container(
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 30,
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: GestureDetector(
+                    child: Container(
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      color: lightGrey,
                     ),
-                    color: lightGrey,
-                  ),
-                  onTap: () async {
-                    filePickerResult = await FilePicker.platform.pickFiles(
-                      type: FileType.image,
-                      allowCompression: true,
-                      allowMultiple: true,
-                      withData: true,
-                    );
+                    onTap: () async {
+                      filePickerResult = await FilePicker.platform.pickFiles(
+                        type: FileType.image,
+                        allowCompression: true,
+                        allowMultiple: true,
+                        withData: true,
+                      );
 
-                    setState(() {});
-                  },
+                      setState(() {});
+                    },
+                  ),
                 ),
                 if (filePickerResult != null)
                   for (int i = 0; i < filePickerResult.files.length; i++)
-                    Image.memory(
-                      filePickerResult.files[i].bytes,
-                      fit: BoxFit.cover,
+                    Container(
+                      child: Image.memory(
+                        filePickerResult.files[i].bytes,
+                        fit: BoxFit.cover,
+                      ),
                     ),
               ],
             ),
@@ -90,39 +89,50 @@ class _AddPostBodyState extends State<AddPostBody> {
             height: 15,
           ),
 
-          //Category
-          RoundedDropDownButton(
-            DropdownButton<String>(
-              hint: Text('Category'),
-              value: category,
-              items: <DropdownMenuItem<String>>[
-                for (int i = 0; i < categories.length; i++)
-                  DropdownMenuItem<String>(
-                    value: categories[i],
-                    child: Text(categories[i]),
-                  )
-              ],
-              onChanged: (value) {
-                setState(() {
-                  category = value;
-                });
-              },
-            ),
-          ),
+          Row(
+            children: [
+              //Category
+              Expanded(
+                flex: 1,
+                child: RoundedDropDownButton(
+                  DropdownButton<String>(
+                    hint: Text('Category'),
+                    value: category,
+                    items: <DropdownMenuItem<String>>[
+                      for (int i = 0; i < categories.length; i++)
+                        DropdownMenuItem<String>(
+                          value: categories[i],
+                          child: Text(categories[i]),
+                        )
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        category = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
 
-          const SizedBox(
-            height: 10,
-          ),
+              const SizedBox(
+                height: 10,
+              ),
 
-          //Sub-category
-          MyForm(
-            labelText: 'Sub category',
-            formKey: _subCategoryKey,
-            controller: _subCategoryController,
-            validator: (value) {
-              if (value.trim().isEmpty) return 'Sub category cannot be empty';
-              return null;
-            },
+              //Sub-category
+              Expanded(
+                flex: 1,
+                child: MyForm(
+                  labelText: 'Sub category',
+                  formKey: _subCategoryKey,
+                  controller: _subCategoryController,
+                  validator: (value) {
+                    if (value.trim().isEmpty)
+                      return 'Sub category cannot be empty';
+                    return null;
+                  },
+                ),
+              ),
+            ],
           ),
 
           const SizedBox(
@@ -192,11 +202,11 @@ class _AddPostBodyState extends State<AddPostBody> {
 
               //TODO: TEST ONLY , FIX IT.
               addPost(
-                phoneNumber: null,
-                userToken: null,
+                phoneNumber: '+962770551747',
+                userToken: 'ABCD',
                 images: images,
                 categoryId: 1,
-                subCategoryId: 1,
+                subCategory: _subCategoryController.text.trim(),
                 country: 'jordan',
                 city: location.governorate,
                 description: _descriptionController.text.trim(),
@@ -221,13 +231,7 @@ class _AddPostBodyState extends State<AddPostBody> {
               ),
               color: grey,
               onPressed: () async {
-                await Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => SignUpPage(),
-                  ),
-                );
-
+                await Navigator.pushNamed(context, 'signUp');
                 setState(() {});
               },
             ),
