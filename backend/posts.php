@@ -13,7 +13,7 @@ class PostsHandler
 {
     public function addPost()
     {
-        $dbController = new DatabaseController;
+        include 'database_controller.php';
         $postModel = new PostModel;
         $phoneNumber = ($_POST['phone_number']);
         $user_token = ($_POST['user_token']);
@@ -24,27 +24,43 @@ class PostsHandler
         $postModel->setCountry($_POST['country']);
         $postModel->setCity($_POST['city']);
 
+        $dbController = new DatabaseController;
         if (!($dbController->checkPhoneAndToken($phoneNumber, $user_token))) {
             echo 'wront phone number or token!';
             return;
         }
-        if (sizeof($postModel->getImages()) === 0) {
-            echo 'no images provided!';
+
+        $postValidation = $this->checkPostValidation($postModel);
+        if (!($postValidation === true)) {
+            echo $postValidation;
             return;
+        }
+
+        $dbController->addPost($postModel)?'success':'fail';
+    }
+    public function checkPostValidation(PostModel $postModel)
+    {
+        $dbController = new DatabaseController;
+
+        if (sizeof($postModel->getImages()) === 0) {
+            return 'no images provided!';
         }
         if ($dbController->checkCategoryExistence($postModel->getCategoryId())->num_rows === 0) {
-            echo 'category id does not exist';
-            return;
+            return 'category id does not exist';
         }
         if (strlen($postModel->getSubCategory()) === 0) {
-            echo 'sub category cannot be empty!';
-            return;
+            return 'sub category cannot be empty!';
         }
-        if(strlen($postModel->getDescription())===0)
-        {
-            echo 'description cannot be empty!';
-            return;
+        if (strlen($postModel->getDescription()) === 0) {
+            return 'description cannot be empty!';
         }
+        if (strlen($postModel->getCountry()) === 0) {
+            return 'country cannot be empty!';
+        }
+        if (strlen($postModel->getCity()) === 0) {
+            return 'city cannot be empty!';
+        }
+        return true;
     }
 }
 class PostModel
@@ -134,3 +150,4 @@ class PostModel
         return $this->images_urls;
     }
 }
+?>

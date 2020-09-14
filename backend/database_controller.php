@@ -1,6 +1,12 @@
 <?php
 class DatabaseController{
 
+    public function addPost(PostModel $postModel)
+    {
+        //TODO add insert query
+        include 'database_connection.php';
+        $query = "insert into post "."()"." values ()"
+    }
     public function checkPhoneAndToken(String $phoneNumber,String $email)
     {
         include 'database_connection.php';
