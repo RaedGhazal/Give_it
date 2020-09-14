@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+
+import 'package:http/http.dart' as http;
 
 //TODO: Add implementation.
 void addPost({
@@ -6,8 +10,25 @@ void addPost({
   @required String userToken,
   @required List<List<String>> images,
   @required int categoryId,
-  @required int subCategoryId,
+  @required String subCategory,
   @required String country,
   @required String city,
   @required String description,
-}) {}
+}) async {
+  const url = "https://raedghazal.com/giveit_project/posts.php";
+
+  final response = await http.post(url, body: {
+    'function': 'add',
+    'phone_number': phoneNumber,
+    'user_token': userToken,
+    'images': jsonEncode(images),
+    'category_id': '$categoryId',
+    'sub_category': '$subCategory',
+    'country': country,
+    'city': city,
+    'description': description,
+  });
+
+  print(response.body);
+
+}

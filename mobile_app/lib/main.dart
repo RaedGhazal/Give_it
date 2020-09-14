@@ -5,6 +5,13 @@ import 'pages/pages.dart';
 import 'pages/pages.dart';
 import 'pages/pages.dart';
 import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
 import 'themes.dart';
 
 void main() {
@@ -30,9 +37,8 @@ class _MyAppState extends State<MyApp> {
       theme: defaultTheme,
       routes: <String, WidgetBuilder>{
         'home': (context) => HomePage(),
-        'addPost': (context) => AddPostPage(),
-        'signUp' : (context) => SignUpPage(),
-
+        'signUp': (context) => SignUpPage(),
+        'addPost': (Context) => AddPostPage(),
       },
     );
   }
