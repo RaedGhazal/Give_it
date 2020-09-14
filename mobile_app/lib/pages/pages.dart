@@ -16,15 +16,11 @@ import '../models/account.dart';
 import '../models/database.dart';
 
 //All app pages
-part 'mainPage.dart';
-
 part 'signUpPage.dart';
 
 part 'homePage.dart';
 
 part 'addPostPage.dart';
-
-part 'settingsPage.dart';
 
 const locations = const <String>[
   'Irbid',

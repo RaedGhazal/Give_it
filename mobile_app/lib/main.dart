@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
+import 'pages/pages.dart';
 import 'themes.dart';
 
 void main() {
@@ -23,8 +26,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: HomePage(),
       theme: defaultTheme,
+      routes: <String, WidgetBuilder>{
+        'home': (context) => HomePage(),
+        'addPost': (context) => AddPostPage(),
+        'signUp' : (context) => SignUpPage(),
+
+      },
     );
   }
 }
