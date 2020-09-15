@@ -30,16 +30,16 @@ class DatabaseController
     {
         include 'database_connection.php';
 
-        $query = "select p.*,i.image_url,u.phone_number from posts p" .
-            " left outer join images i on p.post_id = i.post_id" .
-            " left outer join users u on p.user_id = u.user_id" .
-            " where p.is_removed = 0 and p.country = '$country'";
+        $query = "select p.*,i.image_url,u.phone_number,c.category_name from posts p"
+        ." left outer join images i on p.post_id = i.post_id"
+        ." left outer join users u on p.user_id = u.user_id "
+        ." left outer join categories c on p.category_id = c.category_id"
+        ." where p.is_removed = 0 and p.country = '$country'";
 
-            echo $query;
         if (strlen($city) > 0)
-            $query .= " and city = '$city'";
+            $query .= " and p.city = '$city'";
         if (strlen($category_id) > 0)
-            $query .= " and category_id = '$category_id'";
+            $query .= " and p.category_id = '$category_id'";
         $result = mysqli_query($connection, $query);
         $posts = array();
         for ($i; $i < $result->num_rows; $i++) {
@@ -67,13 +67,13 @@ class DatabaseController
         }
         return $categories;
     }
-    public function getUsedCategories($byCity, $country, $city)
+    public function getUsedCategories($country, $city)
     {
         include 'database_connection.php';
         $query = "SELECT DISTINCT(p.category_id) as c_id,c.category_name as c_name FROM posts p 
         left outer JOIN categories c on c.category_id = p.category_id 
         where country = '$country'";
-        if ($byCity)
+        if (strlen($city)>0 && strtolower($city)!='all')
             $query .= " and city = '$city'";
 
         $result = mysqli_query($connection, $query);

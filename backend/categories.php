@@ -14,19 +14,17 @@ switch ($function) {
 }
 class CategoryHandler
 {
-    private $dbController = new DatabaseController;
     public function getAllCategories()
     {
         include 'database_controller.php';
-        echo $this->dbController->getAllCategories();
+        echo (new DatabaseController)->getAllCategories();
     }
     public function getUsedCategories()
     {
         include 'database_controller.php';
-        $byCity = $_POST['by_city'];
         $country = $_POST['country'];
         $city = $_POST['city'];
-        echo json_encode($this->dbController->getUsedCategories($byCity, $country, $city));
+        echo json_encode((new DatabaseController)->getUsedCategories($country, $city));
     }
 }
 ?>
