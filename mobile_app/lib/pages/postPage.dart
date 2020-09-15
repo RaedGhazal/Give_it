@@ -25,23 +25,22 @@ class _PostPageState extends State<PostPage> {
             categoryId: widget.category.id),
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.done) {
-            // final data = snap.data;
-            //
-            // if (data == null) {
-            //   return Center(
-            //     child: Text(snap.error.toString()),
-            //   );
-            // }
-            //
-            // return ListView.builder(
-            //     itemCount: data.length,
-            //     itemBuilder: (context, index) {
-            //       return Padding(
-            //         padding: const EdgeInsets.only(bottom: 10),
-            //         child: PostWidget(data[index]),
-            //       );
-            //     });
+            final data = snap.data;
 
+            if (data == null) {
+              return Center(
+                child: Text(snap.error.toString()),
+              );
+            }
+
+            return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: PostWidget(data[index]),
+                  );
+                });
           }
 
           return const Center(

@@ -66,7 +66,6 @@ Future<List<Category>> getUsedCategories(
 
   return categories;
 }
-//TODO:DELETE AFTER TEST
 
 Future<List<Post>> getPosts(
     {String country, String city, int categoryId}) async {
@@ -80,10 +79,12 @@ Future<List<Post>> getPosts(
   print('Input : country = $country , city = $city , categoryId = $categoryId');
 
   List jsonPosts = json.decode(response.body);
-  print(jsonPosts);
+  print('getposts : $jsonPosts');
   List<Post> posts = List<Post>();
   for (Map p in jsonPosts) {
-    var post = Post(
+
+    List<String> l = List<String>();
+    posts.add(Post(
         id: int.parse(p['post_id']),
         categoryId: int.parse(p['category_id']),
         categoryName: p['category_name'],
@@ -91,10 +92,8 @@ Future<List<Post>> getPosts(
         description: p['description'],
         country: p['country'],
         city: p['city'],
-        imagesUrl: p['image_url'],
-        phoneNumber: p['phone_number']);
-
-    posts.add(post);
+        imagesUrl: p['images_urls'],
+        phoneNumber: p['phone_number']));
   }
 
   print('posts: $posts');
