@@ -14,7 +14,6 @@ class _AddPostBodyState extends State<AddPostBody> {
   Location location = Location();
 
   String category;
-  List<String> categories = ['text1', 'test2'];
 
   final _descriptionKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
@@ -109,13 +108,20 @@ class _AddPostBodyState extends State<AddPostBody> {
                     flex: 1,
                     child: RoundedDropDownButton(
                       DropdownButton<String>(
-                        hint: Text('Category'),
+                        hint: Text(
+                          'Category',
+                          style: Theme.of(context).textTheme.bodyText1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         value: category,
                         items: <DropdownMenuItem<String>>[
                           for (int i = 0; i < categories.length; i++)
                             DropdownMenuItem<String>(
                               value: categories[i],
-                              child: Text(categories[i]),
+                              child: Text(
+                                categories[i],
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                             )
                         ],
                         onChanged: (value) {

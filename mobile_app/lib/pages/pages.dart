@@ -37,3 +37,21 @@ const locations = const <String>[
   "Ma'an",
   'Aqaba',
 ];
+
+// const categories = const <String>[
+//   'furniture',
+//   'clothes',
+//   'electronics',
+//   'books',
+//   'pets accessories',
+//   'tools',
+// ];
+
+const categories = <int, String>{
+  0: 'furniture',
+  1: 'clothes',
+  2: 'electronics',
+  3: 'books',
+  4: 'pets accessories',
+  5: 'tools',
+};

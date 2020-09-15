@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             ),
             CategoryWidget(
               asset: 'assets/categories/clothes.jpg',
-              label: 'clothes',
+              label: 'Clothes',
             ),
             CategoryWidget(
               asset: 'assets/categories/electronics.jpg',

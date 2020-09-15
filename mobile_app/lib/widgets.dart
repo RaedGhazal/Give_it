@@ -102,13 +102,19 @@ class _PickLocationState extends State<PickLocation> {
     return RoundedDropDownButton(
       DropdownButton<String>(
         icon: Icon(Icons.location_on),
-        hint: Text('Location'),
+        hint: Text(
+          'Location',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
         value: widget.location.governorate,
         items: <DropdownMenuItem<String>>[
           for (int i = 0; i < locations.length; i++)
             DropdownMenuItem<String>(
               value: locations[i],
-              child: Text(locations[i]),
+              child: Text(
+                locations[i],
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             )
         ],
         onChanged: (value) {
@@ -143,6 +149,7 @@ class MyForm extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
+        style: Theme.of(context).textTheme.bodyText1,
         decoration: InputDecoration(
           labelText: labelText,
         ),
@@ -181,9 +188,8 @@ class CategoryWidget extends StatelessWidget {
               asset,
               fit: BoxFit.cover,
             ),
-            Positioned(
-              top: 5,
-              left: 5,
+            Align(
+              alignment: Alignment.bottomCenter,
               child: Chip(
                 label: Text(label),
                 backgroundColor: Colors.white,

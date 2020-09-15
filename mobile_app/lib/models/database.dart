@@ -32,10 +32,23 @@ Future<void> addPost({
   print(response.body);
 }
 
-Future<Map<String , dynamic>> getAllCategories() async {
+Future<Map<String, dynamic>> getAllCategories() async {
   const url = "https://raedghazal.com/giveit_project/categories.php";
   final response = await http.post(url, body: {"function": "get_all"});
   print(json.decode(response.body));
 
+  return json.decode(response.body);
+}
+
+Future<Map<String, dynamic>> getUsedCategories(
+    {String country = 'jordan', String city = ''}) async {
+  const url = "https://raedghazal.com/giveit_project/categories.php";
+  final response = await http.post(url, body: {
+    "function": "get_used",
+    'by_city': city == '' ? 0 : 1,
+    'country': country,
+    'city': city
+  });
+  print(json.decode(response.body));
   return json.decode(response.body);
 }
