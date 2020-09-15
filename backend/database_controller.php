@@ -26,24 +26,28 @@ class DatabaseController
         $query = "insert into images (post_id,image_url) values " . $values;
         return mysqli_query($connection, $query);
     }
-    public function getPosts($country,$city,$category_id)
+    public function getPosts($country, $city, $category_id)
     {
         include 'database_connection.php';
-        
-        $query = "select * from posts where is_removed = 0 and country = '$country'";
-        if(strlen($city)>0)
-        $query.=" and city = '$city'";
-        if(strlen($category_id)>0)
-        $query.=" and category_id = '$category_id'";
-        $result = mysqli_query($connection,$query);
+
+        $query = "select p.*,i.image_url,u.phone_number from posts p" .
+            " left outer join images i on p.post_id = i.post_id" .
+            " left outer join users u on p.user_id = u.user_id" .
+            " where p.is_removed = 0 and p.country = '$country'";
+
+            echo $query;
+        if (strlen($city) > 0)
+            $query .= " and city = '$city'";
+        if (strlen($category_id) > 0)
+            $query .= " and category_id = '$category_id'";
+        $result = mysqli_query($connection, $query);
         $posts = array();
-        for($i;$i<$result->num_rows;$i++)
-        {
+        for ($i; $i < $result->num_rows; $i++) {
             $row = $result->fetch_assoc();
             unset($row["user_id"]);
             unset($row["is_removed"]);
             unset($row["remove_id"]);
-            $posts[]= $row;
+            $posts[] = $row;
         }
         return $posts;
     }
@@ -127,3 +131,4 @@ class DatabaseController
         return $urls;
     }
 }
+?>
