@@ -22,17 +22,3 @@ part 'addPostPage.dart';
 
 part 'postPage.dart';
 
-const locations = const <String>[
-  'Irbid',
-  'Ajloun',
-  'Jerash',
-  'Mafraq',
-  'Balqa',
-  'Amman',
-  'Zarqa',
-  'Madaba',
-  'Karak',
-  'Tafilah',
-  "Ma'an",
-  'Aqaba',
-];
