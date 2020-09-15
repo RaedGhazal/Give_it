@@ -18,12 +18,12 @@ class _PostPageState extends State<PostPage> {
   Post post = Post(
       id: -1,
       subCategory: 'Sub category test',
-      categoryId: 0,
+      categoryName: 'Furniture',
       description: 'description test',
       city: 'amman',
       country: 'Jordan',
       phoneNumber: '+962 77xxxxxxxx',
-      urlImages: [
+      imagesUrl: [
         'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Zinnienbl%C3%BCte_Zinnia_elegans_stack15_20190722-RM-7222254.jpg/400px-Zinnienbl%C3%BCte_Zinnia_elegans_stack15_20190722-RM-7222254.jpg',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Zinnienbl%C3%BCte_Zinnia_elegans_stack15_20190722-RM-7222254.jpg/400px-Zinnienbl%C3%BCte_Zinnia_elegans_stack15_20190722-RM-7222254.jpg',
         'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Zinnienbl%C3%BCte_Zinnia_elegans_stack15_20190722-RM-7222254.jpg/400px-Zinnienbl%C3%BCte_Zinnia_elegans_stack15_20190722-RM-7222254.jpg',
