@@ -15,6 +15,8 @@ class _AddPostBodyState extends State<AddPostBody> {
 
   String category;
 
+  List<Category> downloadedCategories;
+
   final _descriptionKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
 
@@ -106,30 +108,80 @@ class _AddPostBodyState extends State<AddPostBody> {
                   //Category
                   Expanded(
                     flex: 1,
-                    child: RoundedDropDownButton(
-                      DropdownButton<String>(
-                        hint: Text(
-                          'Category',
-                          style: Theme.of(context).textTheme.bodyText1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        value: category,
-                        items: <DropdownMenuItem<String>>[
-                          for (int i = 0; i < categoriesAssets.length; i++)
-                            DropdownMenuItem<String>(
-                              value: categoriesAssets.keys.toList()[i],
-                              child: Text(
-                                categoriesAssets.keys.toList()[i],
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            )
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            category = value;
-                          });
-                        },
-                      ),
+                    child: FutureBuilder<List<Category>>(
+                      future: getAllCategories(),
+                      builder: (context, snap) {
+                        if (snap.connectionState == ConnectionState.done) {
+                          final data = snap.data;
+                          if (data == null) {
+                            return Center(
+                              child: Text(snap.error.toString()),
+                            );
+                          }
+
+                          downloadedCategories = data;
+
+                          return StatefulBuilder(
+                            builder: (context, setState2) {
+                              return RoundedDropDownButton(
+                                DropdownButton<String>(
+                                  hint: Text(
+                                    'Category',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  value: category,
+                                  items: <DropdownMenuItem<String>>[
+                                    for (int i = 0; i < data.length; i++)
+                                      DropdownMenuItem<String>(
+                                        value: data[i].name,
+                                        child: Text(
+                                          data[i].name,
+                                          //categoriesAssets.keys.toList()[i],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1,
+                                        ),
+                                      )
+                                  ],
+                                  onChanged: (value) {
+                                    setState2(() {
+                                      category = value;
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        }
+
+                        return RoundedDropDownButton(
+                          DropdownButton<String>(
+                            hint: Text(
+                              'Category',
+                              style: Theme.of(context).textTheme.bodyText1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            value: category,
+                            items: categoriesAssets.keys.map((e) {
+                              return DropdownMenuItem<String>(
+                                value: e,
+                                child: Text(
+                                  e,
+                                  //categoriesAssets.keys.toList()[i],
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                category = value;
+                              });
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ),
 
@@ -224,7 +276,16 @@ class _AddPostBodyState extends State<AddPostBody> {
                     phoneNumber: '+962770551747',
                     userToken: 'ABCD',
                     images: images,
-                    categoryId: 1,
+                    categoryId: downloadedCategories
+                        .where((element) {
+                          if (element.name == category) return true;
+                          if (element.name == category) return true;
+
+                          return false;
+                        })
+                        .toList()
+                        .first
+                        .id,
                     subCategory: _subCategoryController.text.trim(),
                     country: 'jordan',
                     city: location.governorate,
@@ -245,7 +306,7 @@ class _AddPostBodyState extends State<AddPostBody> {
                   await Navigator.maybePop(context);
                   showSnackBar(widget.homeScaffoldKey,
                       color: Colors.green,
-                      content: 'your post is under be processing');
+                      content: 'your post is being processed');
                   setState(() {});
                 },
               ),

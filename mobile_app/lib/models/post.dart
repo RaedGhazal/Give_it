@@ -7,7 +7,7 @@ class Post {
   final String description;
   final String country;
   final String city;
-  final List<String> imagesUrl;
+  final List<dynamic> imagesUrl;
 
   final String phoneNumber;
 
