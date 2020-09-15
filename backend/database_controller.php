@@ -30,11 +30,10 @@ class DatabaseController
     {
         include 'database_connection.php';
 
-        $query = "select p.*,i.image_url,u.phone_number,c.category_name from posts p"
-        ." left outer join images i on p.post_id = i.post_id"
-        ." left outer join users u on p.user_id = u.user_id "
-        ." left outer join categories c on p.category_id = c.category_id"
-        ." where p.is_removed = 0 and p.country = '$country'";
+        $query = "select p.*,u.phone_number,c.category_name from posts p"
+            . " left outer join users u on p.user_id = u.user_id"
+            . " left outer join categories c on p.category_id = c.category_id"
+            . " where p.is_removed = 0 and p.country = '$country'";
 
         if (strlen($city) > 0)
             $query .= " and p.city = '$city'";
@@ -47,9 +46,21 @@ class DatabaseController
             unset($row["user_id"]);
             unset($row["is_removed"]);
             unset($row["remove_id"]);
+            $row['images_urls'] = ($this->getImagesUrls($row['post_id']));
             $posts[] = $row;
         }
         return $posts;
+    }
+    public function getImagesUrls($post_id): array
+    {
+        include 'database_connection.php';
+        $query = "select * from images where post_id = '$post_id'";
+        $result = mysqli_query($connection, $query);
+        $urls = array();
+        for ($i; $i < $result->num_rows; $i++) {
+            $urls[] = $result->fetch_assoc()['image_url'];
+        }
+        return $urls;
     }
     public function getAllCategories()
     {
@@ -60,6 +71,7 @@ class DatabaseController
         if ($result->num_rows > 0) {
             for ($i; $i < $result->num_rows; $i++) {
                 $row = $result->fetch_assoc();
+                echo $row;
                 $category_id = $row['category_id'];
                 $category_name = $row['category_name'];
                 $categories[$category_id] = $category_name;
@@ -70,10 +82,11 @@ class DatabaseController
     public function getUsedCategories($country, $city)
     {
         include 'database_connection.php';
+        $city = strtolower($city);
         $query = "SELECT DISTINCT(p.category_id) as c_id,c.category_name as c_name FROM posts p 
         left outer JOIN categories c on c.category_id = p.category_id 
         where country = '$country'";
-        if (strlen($city)>0 && strtolower($city)!='all')
+        if (strlen($city) > 0 && strtolower($city) != 'all')
             $query .= " and city = '$city'";
 
         $result = mysqli_query($connection, $query);
