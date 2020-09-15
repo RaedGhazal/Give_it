@@ -34,12 +34,18 @@ Future<void> addPost({
   print(response.body);
 }
 
-Future<Map<String, dynamic>> getAllCategories() async {
+Future<List<Category>> getAllCategories() async {
   const url = "https://raedghazal.com/giveit_project/categories.php";
   final response = await http.post(url, body: {"function": "get_all"});
-  print(json.decode(response.body));
+  Map<String, dynamic> map = json.decode(response.body);
 
-  return json.decode(response.body);
+  List<Category> categories = List<Category>();
+
+  map.forEach((key, value) {
+    categories.add(Category(id: int.parse(key), name: value));
+  });
+
+  return categories;
 }
 
 Future<List<Category>> getUsedCategories(
@@ -82,7 +88,6 @@ Future<List<Post>> getPosts(
   print('getposts : $jsonPosts');
   List<Post> posts = List<Post>();
   for (Map p in jsonPosts) {
-
     List<String> l = List<String>();
     posts.add(Post(
         id: int.parse(p['post_id']),

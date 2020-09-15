@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart' show required;
 
 const categoriesAssets = {
@@ -9,14 +11,17 @@ const categoriesAssets = {
   'tools': 'assets/categories/tools.jpg',
 };
 
-
 class Category {
   final int id;
   final String name;
   final String asset;
 
-  const Category({@required this.id, @required this.name, this.asset});
+  Category({@required this.id, @required this.name, this.asset});
 
+  Category.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        asset = null;
 
   static String getAsset(String name) {
     return categoriesAssets[name];
