@@ -6,6 +6,7 @@ import 'pages/pages.dart';
 import 'themes.dart';
 
 import 'models/post.dart';
+import 'models/category.dart';
 
 void showSnackBar(
   GlobalKey<ScaffoldState> scaffoldKey, {
@@ -215,14 +216,9 @@ class MyForm extends StatelessWidget {
 }
 
 class CategoryWidget extends StatelessWidget {
-  final String asset;
-  final String label;
+  final Category category;
 
-  const CategoryWidget({
-    @required this.asset,
-    @required this.label,
-    Key key,
-  }) : super(key: key);
+  const CategoryWidget(this.category);
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +229,7 @@ class CategoryWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PostPage(category: label),
+              builder: (context) => PostPage(category: category.name),
             ),
           );
         },
@@ -241,13 +237,13 @@ class CategoryWidget extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Image.asset(
-              asset,
+              category.asset,
               fit: BoxFit.cover,
             ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Chip(
-                label: Text(label),
+                label: Text(category.name),
                 backgroundColor: Colors.white,
               ),
             ),
@@ -265,7 +261,6 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return Material(
       color: Colors.white,
       child: Column(
@@ -277,7 +272,7 @@ class PostWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: Chip(
                   label: Text(
-                    '${_post.category} - ${_post.subCategory}',
+                    '${_post.categoryName} - ${_post.subCategory}',
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -297,10 +292,10 @@ class PostWidget extends StatelessWidget {
             aspectRatio: 1,
             child: PageView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: _post.urlImages.length,
+              itemCount: _post.imagesUrl.length,
               itemBuilder: (context, index) {
                 return Image.network(
-                  _post.urlImages[index],
+                  _post.imagesUrl[index],
                   fit: BoxFit.cover,
                 );
               },

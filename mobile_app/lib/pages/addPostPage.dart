@@ -115,11 +115,11 @@ class _AddPostBodyState extends State<AddPostBody> {
                         ),
                         value: category,
                         items: <DropdownMenuItem<String>>[
-                          for (int i = 0; i < categories.length; i++)
+                          for (int i = 0; i < categoriesAssets.length; i++)
                             DropdownMenuItem<String>(
-                              value: categories[i],
+                              value: categoriesAssets.keys.toList()[i],
                               child: Text(
-                                categories[i],
+                                categoriesAssets.keys.toList()[i],
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                             )
