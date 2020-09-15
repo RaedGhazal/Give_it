@@ -88,4 +88,24 @@ class DatabaseController
         }
         return $categories;
     }
+    public function getUsedCategories($byCity,$country,$city)
+    {
+        include 'database_connection.php';
+        $query = "SELECT DISTINCT(p.category_id) as c_id,c.category_name as c_name FROM posts p 
+        left outer JOIN categories c on c.category_id = p.category_id 
+        where country = '$country'";
+        if($byCity)
+        $query .= " and city = '$city'";
+
+        $result = mysqli_query($connection,$query);
+        $categories = array();
+        for($i;$i<$result->num_rows;$i++)
+        {
+            $row = $result->fetch_assoc();
+            $category_id = $row['c_id'];
+            $category_name = $row['c_name'];
+            $categories[$category_id]=$category_name;
+        }
+        return $categories;
+    }
 }
