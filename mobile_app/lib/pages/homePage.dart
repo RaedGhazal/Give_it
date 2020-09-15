@@ -6,7 +6,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final location = Location(governorate: 'A');
+  final location = Location(governorate: 'All');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> locationsWithAll = ['All', ...locations];
 
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisSpacing: 5,
                     mainAxisSpacing: 5,
                   ),
-                  itemBuilder: (context, index) => CategoryWidget(data[index]),
+                  itemBuilder: (context, index) => CategoryWidget(data[index] , location),
                 );
               }
 
