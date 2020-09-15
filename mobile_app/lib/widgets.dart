@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'pages/pages.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'pages/pages.dart';
 import 'themes.dart';
 
-void showSnackBar(
-  GlobalKey<ScaffoldState> scaffoldKey, {
+import 'models/post.dart';
+
+void showSnackBar(GlobalKey<ScaffoldState> scaffoldKey, {
   String content = '',
   Color color = Colors.red,
 }) {
@@ -104,7 +105,10 @@ class _PickLocationState extends State<PickLocation> {
         icon: Icon(Icons.location_on),
         hint: Text(
           'Location',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme
+              .of(context)
+              .textTheme
+              .bodyText1,
         ),
         value: widget.location.governorate,
         items: <DropdownMenuItem<String>>[
@@ -113,7 +117,10 @@ class _PickLocationState extends State<PickLocation> {
               value: locations[i],
               child: Text(
                 locations[i],
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1,
               ),
             )
         ],
@@ -149,7 +156,10 @@ class MyForm extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme
+            .of(context)
+            .textTheme
+            .bodyText1,
         decoration: InputDecoration(
           labelText: labelText,
         ),
@@ -197,6 +207,74 @@ class CategoryWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PostWidget extends StatelessWidget {
+  final Post _post;
+
+  const PostWidget(this._post);
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    return Material(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Chip(
+                  label: Text(
+                    '${_post.category} - ${_post.subCategory}',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Spacer(),
+              IconButton(
+                tooltip: 'Request phone number',
+                icon: const Icon(MdiIcons.phoneOutline),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          AspectRatio(
+            aspectRatio: 1,
+            child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _post.urlImages.length,
+              itemBuilder: (context, index) {
+                return Image.network(
+                  _post.urlImages[index],
+                  fit: BoxFit.cover,
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 0, bottom: 3),
+            child: Text(
+              _post.description,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'roboto',
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal),
+            ),
+          ),
+        ],
       ),
     );
   }
