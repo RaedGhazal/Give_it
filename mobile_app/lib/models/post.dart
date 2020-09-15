@@ -1,6 +1,7 @@
 class Post {
   final int id;
 
+  final int categoryId;
   final String categoryName;
   final String subCategory;
   final String description;
@@ -12,6 +13,7 @@ class Post {
 
   Post(
       {this.id,
+      this.categoryId,
       this.categoryName,
       this.subCategory,
       this.description,

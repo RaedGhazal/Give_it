@@ -145,45 +145,6 @@ class _PickLocationState extends State<PickLocation> {
   }
 }
 
-class SortByLocation extends StatefulWidget {
-  final Location location;
-
-  SortByLocation(this.location);
-
-  @override
-  _SortByLocationState createState() => _SortByLocationState();
-}
-
-class _SortByLocationState extends State<SortByLocation> {
-  List<String> locationsWithAll = ['All', ...locations];
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<String>(
-        icon: Icon(Icons.location_on),
-        hint: Text('All'),
-        value: widget.location.governorate,
-        items: <DropdownMenuItem<String>>[
-          for (int i = 0; i < locationsWithAll.length; i++)
-            DropdownMenuItem<String>(
-              value: locationsWithAll[i],
-              child: Text(
-                locationsWithAll[i],
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            )
-        ],
-        onChanged: (value) {
-          setState(() {
-            widget.location.governorate = value;
-          });
-        },
-      ),
-    );
-  }
-}
-
 typedef String Validator(String value);
 
 class MyForm extends StatelessWidget {
@@ -217,8 +178,9 @@ class MyForm extends StatelessWidget {
 
 class CategoryWidget extends StatelessWidget {
   final Category category;
+  final Location location;
 
-  const CategoryWidget(this.category);
+  const CategoryWidget(this.category, this.location);
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +191,10 @@ class CategoryWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PostPage(category: category.name),
+              builder: (context) => PostPage(
+                category: category,
+                location: location,
+              ),
             ),
           );
         },
@@ -262,25 +227,61 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: Card(
+        margin: EdgeInsets.all(10),
+        child: Material(
+          color: Colors.white,
+          elevation: 5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Chip(
-                  label: Text(
-                    '${_post.categoryName} - ${_post.subCategory}',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+              Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Stack(
+                      children: [
+                        PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _post.imagesUrl.length,
+                          itemBuilder: (context, index) {
+                            return Image.network(
+                              _post.imagesUrl[index],
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
+                  Opacity(
+                    opacity: 0.5,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Chip(
+                        label: Text(
+                          '${_post.subCategory}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 0, bottom: 3),
+                child: Text(
+                  _post.description,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'roboto',
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal),
                 ),
               ),
-              Spacer(),
               IconButton(
                 tooltip: 'Request phone number',
                 icon: const Icon(MdiIcons.phoneOutline),
@@ -288,31 +289,7 @@ class PostWidget extends StatelessWidget {
               ),
             ],
           ),
-          AspectRatio(
-            aspectRatio: 1,
-            child: PageView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _post.imagesUrl.length,
-              itemBuilder: (context, index) {
-                return Image.network(
-                  _post.imagesUrl[index],
-                  fit: BoxFit.cover,
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, top: 0, bottom: 3),
-            child: Text(
-              _post.description,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'roboto',
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
