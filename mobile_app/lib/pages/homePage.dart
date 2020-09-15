@@ -26,8 +26,45 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: Drawer(),
       floatingActionButton: LemonFloatingButton(_scaffoldKey),
-      body: Center(
-        child: Text('HomePage'),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+          ),
+          children: [
+            CategoryWidget(
+              asset: 'assets/categories/furniture.jpg',
+              label: 'Furniture',
+            ),
+            CategoryWidget(
+              asset: 'assets/categories/clothes.jpg',
+              label: 'clothes',
+            ),
+            CategoryWidget(
+              asset: 'assets/categories/electronics.jpg',
+              label: 'Electronics',
+            ),
+            CategoryWidget(
+              asset: 'assets/categories/tools.jpg',
+              label: 'Tools',
+            ),
+            CategoryWidget(
+              asset: 'assets/categories/pets_accessories.jpg',
+              label: ' Pets accessories',
+            ),
+            CategoryWidget(
+              asset: 'assets/categories/books.jpg',
+              label: 'Books',
+            ),
+            CategoryWidget(
+              asset: 'assets/categories/all.jpg',
+              label: 'All',
+            ),
+          ],
+        ),
       ),
     );
   }

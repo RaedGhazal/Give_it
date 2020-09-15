@@ -22,10 +22,13 @@ final defaultTheme = ThemeData(
   ),
   appBarTheme: AppBarTheme(
     color: Colors.white,
+    iconTheme: IconThemeData(
+      color: grey,
+    ),
     textTheme: TextTheme(
       headline6: GoogleFonts.playfairDisplay(
         color: grey,
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: FontWeight.bold,
       ),
     ),
