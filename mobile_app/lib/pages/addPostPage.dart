@@ -15,6 +15,8 @@ class _AddPostBodyState extends State<AddPostBody> {
 
   String category;
 
+  List<Category> downloadedCategories;
+
   final _descriptionKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
 
@@ -116,6 +118,8 @@ class _AddPostBodyState extends State<AddPostBody> {
                               child: Text(snap.error.toString()),
                             );
                           }
+
+                          downloadedCategories = data;
 
                           return StatefulBuilder(
                             builder: (context, setState2) {
@@ -272,7 +276,16 @@ class _AddPostBodyState extends State<AddPostBody> {
                     phoneNumber: '+962770551747',
                     userToken: 'ABCD',
                     images: images,
-                    categoryId: 1,
+                    categoryId: downloadedCategories
+                        .where((element) {
+                          if (element.name == category) return true;
+                          if (element.name == category) return true;
+
+                          return false;
+                        })
+                        .toList()
+                        .first
+                        .id,
                     subCategory: _subCategoryController.text.trim(),
                     country: 'jordan',
                     city: location.governorate,
@@ -290,7 +303,7 @@ class _AddPostBodyState extends State<AddPostBody> {
                     }
                   });
 
-                  //await Navigator.maybePop(context);
+                  await Navigator.maybePop(context);
                   showSnackBar(widget.homeScaffoldKey,
                       color: Colors.green,
                       content: 'your post is being processed');
