@@ -10,6 +10,9 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+
+  final location = Location();
+
   var val;
 
   Post post = Post(
@@ -35,31 +38,7 @@ class _PostPageState extends State<PostPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton(
-                value: val,
-                icon: Icon(Icons.sort),
-                items: [
-                  DropdownMenuItem(
-                    child: Text('Test'),
-                    value: 'Test',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Test'),
-                    value: 'Test',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Test'),
-                    value: 'Test',
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    val = value;
-                  });
-                },
-              ),
-            ),
+            child: SortByLocation(location),
           )
         ],
       ),
