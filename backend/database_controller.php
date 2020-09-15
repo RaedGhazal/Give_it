@@ -11,8 +11,8 @@ class DatabaseController
             . " values ('{$postModel->getUserId()}','{$postModel->getCategoryId()}','{$postModel->getSubCategory()}',"
             . "'{$postModel->getDescription()}','{$postModel->getCountry()}','{$postModel->getCity()}')";
         $result = mysqli_query($connection, $query);
-		$this->addImages($connection->insert_id, $postModel->getImages());
-		return $result;
+        $this->addImages($connection->insert_id, $postModel->getImages());
+        return $result;
     }
     public function addImages(int $post_id, array $images)
     {
@@ -26,19 +26,61 @@ class DatabaseController
         $query = "insert into images (post_id,image_url) values " . $values;
         return mysqli_query($connection, $query);
     }
-    public function checkPhoneAndToken(String $phoneNumber, String $token)
+    public function getPosts($country,$city,$category_id)
     {
         include 'database_connection.php';
-        $query = "select * from users where phone_number = '$phoneNumber' and token = '$token'";
-        $result = mysqli_query($connection, $query);
-        return $result->num_rows > 0;
+        
+        $query = "select * from posts where is_removed = 0 and country = '$country'";
+        if(strlen($city)>0)
+        $query.=" and city = '$city'";
+        if(strlen($category_id)>0)
+        $query.=" and category_id = '$category_id'";
+        $result = mysqli_query($connection,$query);
+        $posts = array();
+        for($i;$i<$result->num_rows;$i++)
+        {
+            $row = $result->fetch_assoc();
+            unset($row["user_id"]);
+            unset($row["is_removed"]);
+            unset($row["remove_id"]);
+            $posts[]= $row;
+        }
+        return $posts;
     }
-    public function checkCategoryExistence($category_id):mysqli_result
+    public function getAllCategories()
     {
         include 'database_connection.php';
-        $query = "select * from categories where category_id='$category_id'";
+        $query = "select * from categories";
         $result = mysqli_query($connection, $query);
-        return $result;
+        $categories = array();
+        if ($result->num_rows > 0) {
+            for ($i; $i < $result->num_rows; $i++) {
+                $row = $result->fetch_assoc();
+                $category_id = $row['category_id'];
+                $category_name = $row['category_name'];
+                $categories[$category_id] = $category_name;
+            }
+        }
+        return $categories;
+    }
+    public function getUsedCategories($byCity, $country, $city)
+    {
+        include 'database_connection.php';
+        $query = "SELECT DISTINCT(p.category_id) as c_id,c.category_name as c_name FROM posts p 
+        left outer JOIN categories c on c.category_id = p.category_id 
+        where country = '$country'";
+        if ($byCity)
+            $query .= " and city = '$city'";
+
+        $result = mysqli_query($connection, $query);
+        $categories = array();
+        for ($i; $i < $result->num_rows; $i++) {
+            $row = $result->fetch_assoc();
+            $category_id = $row['c_id'];
+            $category_name = $row['c_name'];
+            $categories[$category_id] = $category_name;
+        }
+        return $categories;
     }
     public function getUserIdByToken(string $token)
     {
@@ -50,7 +92,20 @@ class DatabaseController
             $user_id = $result->fetch_assoc()['user_id'];
         return $user_id;
     }
-
+    public function checkPhoneAndToken(String $phoneNumber, String $token)
+    {
+        include 'database_connection.php';
+        $query = "select * from users where phone_number = '$phoneNumber' and token = '$token'";
+        $result = mysqli_query($connection, $query);
+        return $result->num_rows > 0;
+    }
+    public function checkCategoryExistence($category_id): mysqli_result
+    {
+        include 'database_connection.php';
+        $query = "select * from categories where category_id='$category_id'";
+        $result = mysqli_query($connection, $query);
+        return $result;
+    }
     public function uploadImages($images): array
     {
         $urls = array();
@@ -70,42 +125,5 @@ class DatabaseController
             $urls[] = $url;
         }
         return $urls;
-    }
-    public function getAllCategories()
-    {
-        include 'database_connection.php';
-        $query = "select * from categories";
-        $result = mysqli_query($connection,$query);
-        $categories = array();
-        if($result->num_rows>0)
-        {
-            for($i;$i<$result->num_rows;$i++){
-                $row = $result->fetch_assoc();
-                $category_id = $row['category_id'];
-                $category_name = $row['category_name'];
-                $categories[$category_id] = $category_name;
-            }
-        }
-        return $categories;
-    }
-    public function getUsedCategories($byCity,$country,$city)
-    {
-        include 'database_connection.php';
-        $query = "SELECT DISTINCT(p.category_id) as c_id,c.category_name as c_name FROM posts p 
-        left outer JOIN categories c on c.category_id = p.category_id 
-        where country = '$country'";
-        if($byCity)
-        $query .= " and city = '$city'";
-
-        $result = mysqli_query($connection,$query);
-        $categories = array();
-        for($i;$i<$result->num_rows;$i++)
-        {
-            $row = $result->fetch_assoc();
-            $category_id = $row['c_id'];
-            $category_name = $row['c_name'];
-            $categories[$category_id]=$category_name;
-        }
-        return $categories;
     }
 }

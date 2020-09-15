@@ -18,7 +18,7 @@ class CategoryHandler
     public function getAllCategories()
     {
         include 'database_controller.php';
-        echo $dbController->getAllCategories();
+        echo $this->dbController->getAllCategories();
     }
     public function getUsedCategories()
     {
@@ -26,7 +26,7 @@ class CategoryHandler
         $byCity = $_POST['by_city'];
         $country = $_POST['country'];
         $city = $_POST['city'];
-        echo json_encode($dbController->getUsedCategories($byCity, $country, $city));
+        echo json_encode($this->dbController->getUsedCategories($byCity, $country, $city));
     }
 }
 ?>
