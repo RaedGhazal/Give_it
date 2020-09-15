@@ -145,44 +145,7 @@ class _PickLocationState extends State<PickLocation> {
   }
 }
 
-class SortByLocation extends StatefulWidget {
-  final Location location;
 
-  SortByLocation(this.location);
-
-  @override
-  _SortByLocationState createState() => _SortByLocationState();
-}
-
-class _SortByLocationState extends State<SortByLocation> {
-  List<String> locationsWithAll = ['All', ...locations];
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<String>(
-        icon: Icon(Icons.location_on),
-        hint: Text('All'),
-        value: widget.location.governorate,
-        items: <DropdownMenuItem<String>>[
-          for (int i = 0; i < locationsWithAll.length; i++)
-            DropdownMenuItem<String>(
-              value: locationsWithAll[i],
-              child: Text(
-                locationsWithAll[i],
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            )
-        ],
-        onChanged: (value) {
-          setState(() {
-            widget.location.governorate = value;
-          });
-        },
-      ),
-    );
-  }
-}
 
 typedef String Validator(String value);
 

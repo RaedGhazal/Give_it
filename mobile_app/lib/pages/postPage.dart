@@ -35,12 +35,7 @@ class _PostPageState extends State<PostPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(widget.category),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: SortByLocation(location),
-          )
-        ],
+
       ),
       body: ListView.builder(itemBuilder: (context, index) {
         return Padding(

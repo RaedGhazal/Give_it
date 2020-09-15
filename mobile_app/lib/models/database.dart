@@ -52,12 +52,15 @@ Future<List<Category>> getUsedCategories(
     'city': city
   });
   print(json.decode(response.body));
-  Map<int, String> jsonCategories = json.decode(response.body);
+  var jsonCategories = json.decode(response.body);
+  if(jsonCategories is List)
+    return List<Category>();
+
 
   List<Category> categories = <Category>[];
   for (var id in jsonCategories.keys) {
     categories.add(Category(
-      id: id,
+      id: int.parse(id),
       name: jsonCategories[id],
       asset: Category.getAsset(jsonCategories[id]),
     ));
