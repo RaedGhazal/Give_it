@@ -17,7 +17,7 @@ class CategoryHandler
     public function getAllCategories()
     {
         include 'database_controller.php';
-        echo (new DatabaseController)->getAllCategories();
+        echo json_encode((new DatabaseController)->getAllCategories());
     }
     public function getUsedCategories()
     {
