@@ -105,31 +105,27 @@ class _AddPostBodyState extends State<AddPostBody> {
               Row(
                 children: [
                   //Category
-                  FutureBuilder(future: getAllCategories(),builder: (context, snap) {
-                    //TODO: FIX THIS :)
-                    getAllCategories();
-                    return Expanded(
-                      flex: 1,
-                      child: RoundedDropDownButton(
-                        DropdownButton<String>(
-                          hint: Text('Category'),
-                          value: category,
-                          items: <DropdownMenuItem<String>>[
-                            for (int i = 0; i < categories.length; i++)
-                              DropdownMenuItem<String>(
-                                value: categories[i],
-                                child: Text(categories[i]),
-                              )
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              category = value;
-                            });
-                          },
-                        ),
+                  Expanded(
+                    flex: 1,
+                    child: RoundedDropDownButton(
+                      DropdownButton<String>(
+                        hint: Text('Category'),
+                        value: category,
+                        items: <DropdownMenuItem<String>>[
+                          for (int i = 0; i < categories.length; i++)
+                            DropdownMenuItem<String>(
+                              value: categories[i],
+                              child: Text(categories[i]),
+                            )
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            category = value;
+                          });
+                        },
                       ),
-                    );
-                  }),
+                    ),
+                  ),
 
                   const SizedBox(
                     width: 15,
