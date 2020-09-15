@@ -7,7 +7,8 @@ import 'themes.dart';
 
 import 'models/post.dart';
 
-void showSnackBar(GlobalKey<ScaffoldState> scaffoldKey, {
+void showSnackBar(
+  GlobalKey<ScaffoldState> scaffoldKey, {
   String content = '',
   Color color = Colors.red,
 }) {
@@ -105,10 +106,7 @@ class _PickLocationState extends State<PickLocation> {
         icon: Icon(Icons.location_on),
         hint: Text(
           'Location',
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyText1,
+          style: Theme.of(context).textTheme.bodyText1,
         ),
         value: widget.location.governorate,
         items: <DropdownMenuItem<String>>[
@@ -117,10 +115,7 @@ class _PickLocationState extends State<PickLocation> {
               value: locations[i],
               child: Text(
                 locations[i],
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyText1,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             )
         ],
@@ -156,10 +151,7 @@ class MyForm extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
-        style: Theme
-            .of(context)
-            .textTheme
-            .bodyText1,
+        style: Theme.of(context).textTheme.bodyText1,
         decoration: InputDecoration(
           labelText: labelText,
         ),
@@ -219,10 +211,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Material(
       color: Colors.white,
       child: Column(
