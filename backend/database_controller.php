@@ -35,7 +35,7 @@ class DatabaseController
             . " left outer join categories c on p.category_id = c.category_id"
             . " where p.is_removed = 0 and p.country = '$country'";
 
-        if (strlen($city) > 0)
+        if (strlen($city) > 0 && strtolower($city) != 'all')
             $query .= " and p.city = '$city'";
         if (strlen($category_id) > 0)
             $query .= " and p.category_id = '$category_id'";
@@ -65,13 +65,12 @@ class DatabaseController
     public function getAllCategories()
     {
         include 'database_connection.php';
-        $query = "select * from categories";
+        $query = "select * from categories order by category_id";
         $result = mysqli_query($connection, $query);
         $categories = array();
         if ($result->num_rows > 0) {
             for ($i; $i < $result->num_rows; $i++) {
                 $row = $result->fetch_assoc();
-                echo $row;
                 $category_id = $row['category_id'];
                 $category_name = $row['category_name'];
                 $categories[$category_id] = $category_name;
@@ -135,7 +134,8 @@ class DatabaseController
             if (in_array($fileExtention, $allowedFilesExtentions)) {
                 $path = __DIR__ . "/uploaded_images/$imageName";
                 file_put_contents($path, $realImage);
-                $url = substr($path, strpos($path, 'raedghazal.com'));
+                $url = "https://".substr($path, strpos($path, 'raedghazal.com'));
+                $url = substr($url, 0,23).'/'.substr($url, 23);
             } else {
                 echo 'this file type ' . $imageName . ' is not supported!';
             }

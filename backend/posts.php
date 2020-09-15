@@ -1,5 +1,4 @@
     <?php
-    include 'database_controller.php';
     $function = $_POST['function'];
     $postHandler = new PostsHandler;
     switch ($function) {
@@ -42,6 +41,7 @@
         }
         public function getAllPosts()
         {
+            include 'database_controller.php';
             $category_id = $_POST['category_id'];
             $country = $_POST['country'];
             $city = $_POST['city'];
