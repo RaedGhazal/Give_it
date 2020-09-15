@@ -150,3 +150,48 @@ class MyForm extends StatelessWidget {
     );
   }
 }
+
+class CategoryWidget extends StatelessWidget {
+  final String asset;
+  final String label;
+
+  const CategoryWidget({
+    @required this.asset,
+    @required this.label,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PostPage(category: label),
+            ),
+          );
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              asset,
+              fit: BoxFit.cover,
+            ),
+            Positioned(
+              top: 5,
+              left: 5,
+              child: Chip(
+                label: Text(label),
+                backgroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

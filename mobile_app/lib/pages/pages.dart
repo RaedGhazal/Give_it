@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-
-
 import 'package:file_picker/file_picker.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
 
@@ -22,6 +20,8 @@ part 'signUpPage.dart';
 part 'homePage.dart';
 
 part 'addPostPage.dart';
+
+part 'postPage.dart';
 
 const locations = const <String>[
   'Irbid',
