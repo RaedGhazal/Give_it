@@ -9,18 +9,14 @@ release build for Android : https://github.com/RaedGhazal/Give_it/blob/master/ap
 or you can use the description below to regenerate it.
 
 Used technologies:
-* Flutter & Dart for devloping the frontend.
-* Php & MySql for server api and database.
-* Firebase for phone authentication.
-
- How to make a release a build:
- 1 - Download Android Studio
- 2 - Download Dart Sdk & Flutter Sdk.
- 3 - connect the app to firebase.
- 4 - enable phone authentication.
- 5 - call the command flutter run --release
- 6 - the apk will be generated in the following path:
-Give_it\mobile_app\build\app\outputs\apk\release\app-release.apk
+ 1. Flutter & Dart for devloping the frontend.
+ 2. Php & MySql for server api and database.
+ 3. Firebase for phone authentication.
+ 4. How to make a release a build:  Download Android Studio   Download
+    Dart Sdk & Flutter Sdk.  connect the app to firebase.   enable phone
+    authentication.   call the command flutter run --release   the apk
+    will be generated in the following path:
+    Give_it\mobile_app\build\app\outputs\apk\release\app-release.apk
 
 code used to generate the database and server connection:
 
