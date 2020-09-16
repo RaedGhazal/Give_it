@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
+import 'models/account.dart';
 import 'pages/pages.dart';
 
 import 'themes.dart';
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
+    print ('Hello ${user?.phoneNumber}');
   }
 
   @override

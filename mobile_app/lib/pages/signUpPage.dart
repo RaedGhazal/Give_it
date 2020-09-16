@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text('Verify phone number'),
+                      title: Text('Verify phone number' , style: TextStyle(fontSize: 25),),
                       content: Form(
                         key: _verifyPhoneKey,
                         child: TextFormField(

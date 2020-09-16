@@ -52,7 +52,52 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            if (!isSignedIn)
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.account_circle),
+                  title: Text('Sign-in or Sign-up'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  },
+                ),
+              ),
+            if (isSignedIn)
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.account_circle),
+                  title: Text('Sign-in or Sign-up'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  },
+                ),
+              ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.report),
+                title: Text('licences'),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AboutDialog(
+                      applicationName: 'Give it',
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: LemonFloatingButton(_scaffoldKey),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -78,7 +123,8 @@ class _HomePageState extends State<HomePage> {
                     crossAxisSpacing: 5,
                     mainAxisSpacing: 5,
                   ),
-                  itemBuilder: (context, index) => CategoryWidget(data[index] , location),
+                  itemBuilder: (context, index) =>
+                      CategoryWidget(data[index], location),
                 );
               }
 

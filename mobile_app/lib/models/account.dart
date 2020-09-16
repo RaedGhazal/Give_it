@@ -37,6 +37,8 @@ User get user {
 Future<bool> sendVerificationPhoneMessage(String phoneNumber) async {
   if (!isPhoneNumberFormatValid(phoneNumber)) return false;
 
+  var result = true;
+
   await _auth.verifyPhoneNumber(
     phoneNumber: phoneNumber,
     timeout: const Duration(minutes: 2),
@@ -45,17 +47,17 @@ Future<bool> sendVerificationPhoneMessage(String phoneNumber) async {
     //Android only.
     verificationCompleted: (phoneAuthCredential) async {
       print('verificationCompleted');
-      try {
-        await _auth.signInWithCredential(phoneAuthCredential);
-      } catch (e) {
-        print(e);
-        return false;
-      }
+      // try {
+      //   await _auth.signInWithCredential(phoneAuthCredential);
+      // } catch (e) {
+      //   print(e);
+      //   result = false;
+      // }
     },
 
     verificationFailed: (FirebaseAuthException e) {
       print('phone verificationFailed');
-      return false;
+      result = false;
     },
     codeSent: (verificationId, forceResendingToken) {
       print('codeSent');
@@ -64,7 +66,7 @@ Future<bool> sendVerificationPhoneMessage(String phoneNumber) async {
     codeAutoRetrievalTimeout: (verificationId) {},
   );
 
-  return true;
+  return result;
 }
 
 ///Call [sendVerificationPhoneMessage] before this function.
