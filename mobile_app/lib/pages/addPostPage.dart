@@ -197,6 +197,17 @@ class _AddPostBodyState extends State<AddPostBody> {
                     return;
                   }
 
+                  for (int i = 0; i < filePickerResult.files.length; i++) {
+                    var ex = filePickerResult.files[i].extension.toLowerCase();
+
+                    if (ex != 'jpg' && ex != 'jpeg' && ex != 'png') {
+                      showSnackBar(widget.scaffoldKey,
+                          content:
+                              'only jpg , jpeg , png image extensions are allowed');
+                      return;
+                    }
+                  }
+
                   if (!_descriptionKey.currentState.validate()) return;
 
                   if (!_subCategoryKey.currentState.validate()) return;

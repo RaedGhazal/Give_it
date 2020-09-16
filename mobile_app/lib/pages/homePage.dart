@@ -117,7 +117,27 @@ class _HomePageState extends State<HomePage> {
 
                 if (data == null) {
                   return Center(
-                    child: Text(snap.error.toString()),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'An error occurred',
+                        ),
+                        FlatButton(
+                          color: grey,
+                          child: Text(
+                            'Try again',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            setState(() {});
+                          },
+                        )
+                      ],
+                    ),
                   );
                 }
 
