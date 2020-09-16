@@ -1,9 +1,14 @@
 <?php
-
-$username = 'arqaa_teamGiveit';
-$password = 'ATGiveItProject1292020';
+///All php files have been uploaded to my host server, including the following information,
+///but I removed them from here so it doesn't become public to anyone who enters thig github repo
+///you can still test this code on any other server host (if necessary) by adding the server and database
+///information below.
+///if tested on another host server, make sure to create a folder called 'uploaded_images' in the same root
+///and change its read write permission so php can save the uploaded images to the folder when a post is added.
+$username = '';
+$password = '';
 $host = 'raedghazal.com';
-$db_name = 'arqaamso_giveit_db';
+$db_name = '';
 
 $connection = mysqli_connect($host, $username, $password, $db_name);
 if (!$connection)
