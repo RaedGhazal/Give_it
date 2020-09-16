@@ -55,30 +55,32 @@ class _HomePageState extends State<HomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            if (!isSignedIn)
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text('Sign-in or Sign-up'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
-                    );
-                  },
-                ),
-              ),
-            if (isSignedIn)
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text('Sign out'),
-                  onTap: () {
-                    signOut();
-                    Navigator.of(context).maybePop(context);
-                  },
-                ),
-              ),
+            isSignedIn
+                ? Card(
+                    child: ListTile(
+                      leading: Icon(Icons.account_circle),
+                      title: Text('Sign out'),
+                      onTap: () async {
+                        signOut();
+                        await Navigator.of(context).maybePop(context);
+                        setState(() {});
+                      },
+                    ),
+                  )
+                : Card(
+                    child: ListTile(
+                      leading: Icon(Icons.account_circle),
+                      title: Text('Sign-in or Sign-up'),
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpPage()),
+                        );
+
+                        setState(() {});
+                      },
+                    ),
+                  ),
             Card(
               child: ListTile(
                 leading: Icon(Icons.report),

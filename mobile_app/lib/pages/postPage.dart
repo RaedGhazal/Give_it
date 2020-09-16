@@ -11,9 +11,12 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(widget.category.name),
@@ -38,7 +41,7 @@ class _PostPageState extends State<PostPage> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: PostWidget(data[index]),
+                    child: PostWidget(data[index] , _scaffoldKey),
                   );
                 });
           }

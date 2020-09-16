@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'models/account.dart';
 import 'pages/pages.dart';
 import 'pages/pages.dart';
+import 'pages/pages.dart';
 import 'themes.dart';
 
 import 'models/post.dart';
@@ -225,27 +226,12 @@ class CategoryWidget extends StatelessWidget {
 
 class PostWidget extends StatelessWidget {
   final Post _post;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const PostWidget(this._post);
+  const PostWidget(this._post, this.scaffoldKey);
 
   @override
   Widget build(BuildContext context) {
-    // return Material(
-    //   child: Card(
-    //     margin: EdgeInsets.all(10),
-    //     child: Material(
-    //       color: Colors.white,
-    //       elevation: 5,
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //
-
-    //               //Images
-    //               AspectRatio(
-    //                 aspectRatio: 1,
-    //                 child: Stack(
-    //                   children: [
-
     return Container(
       height: 400,
       width: double.infinity,
@@ -291,7 +277,7 @@ class PostWidget extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) =>
-                              PhoneNumberDialog(_post.phoneNumber),
+                              PhoneNumberDialog(_post.phoneNumber, scaffoldKey),
                         );
                       },
                     ),
@@ -355,24 +341,51 @@ class PostWidget extends StatelessWidget {
 
 class PhoneNumberDialog extends StatelessWidget {
   final String phoneNumber;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const PhoneNumberDialog(this.phoneNumber);
+  const PhoneNumberDialog(this.phoneNumber, this.scaffoldKey);
 
   @override
   Widget build(BuildContext context) {
     if (!isSignedIn)
-      Scaffold.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(
-          content: Text('Please sign in first'),
-          action: SnackBarAction(
-              label: 'Sign in',
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
-                );
-              }),
-        ));
+      return AlertDialog(
+        title: Text(
+          'Sign in first',
+          style: TextStyle(fontSize: 20),
+        ),
+        actions: [
+          FlatButton(
+            color: grey,
+            child: Text(
+              'Cancel',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  .copyWith(color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.of(context).maybePop();
+            },
+          ),
+          FlatButton(
+            color: grey,
+            child: Text(
+              'Sign in',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  .copyWith(color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SignUpPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      );
 
     return AlertDialog(
       title: Text(
