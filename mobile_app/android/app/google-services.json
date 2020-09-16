@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "916123221001",
+    "firebase_url": "https://give-it-fd94d.firebaseio.com",
+    "project_id": "give-it-fd94d",
+    "storage_bucket": "give-it-fd94d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916123221001:android:3861975919c78b64a9ccd8",
+        "android_client_info": {
+          "package_name": "com.example.mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916123221001-alfdh7c7vdcnh4upo595fe3p7fb89q1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobile_app",
+            "certificate_hash": "1c164a527546c7cae5410d763eaf704b933cce78"
+          }
+        },
+        {
+          "client_id": "916123221001-ace64rvht39t44cok6mfd17e5piij7cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeP821Qe_uM3RBSboSe2Oj6edPPYaR3IQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916123221001-ace64rvht39t44cok6mfd17e5piij7cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
