@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'pages/pages.dart';
 import 'themes.dart';
@@ -227,71 +228,175 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Card(
-        margin: EdgeInsets.all(10),
-        child: Material(
-          color: Colors.white,
-          elevation: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: Stack(
-                      children: [
-                        PageView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _post.imagesUrl.length,
-                          itemBuilder: (context, index) {
-                            return Image.network(
-                              _post.imagesUrl[index],
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        ),
-                      ],
+    // return Material(
+    //   child: Card(
+    //     margin: EdgeInsets.all(10),
+    //     child: Material(
+    //       color: Colors.white,
+    //       elevation: 5,
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //
+
+    //               //Images
+    //               AspectRatio(
+    //                 aspectRatio: 1,
+    //                 child: Stack(
+    //                   children: [
+
+    return Container(
+      height: 400,
+      width: double.infinity,
+      padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x54000000),
+              spreadRadius: 1,
+              blurRadius: 4,
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    //Sub category
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        '${_post.subCategory}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            .copyWith(fontSize: 15),
+                      ),
                     ),
-                  ),
-                  Opacity(
-                    opacity: 0.5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Chip(
-                        label: Text(
-                          '${_post.subCategory}',
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+
+                    Spacer(),
+
+                    //Menu
+                    IconButton(
+                      icon: Icon(MdiIcons.phoneOutline),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                              PhoneNumberDialog(_post.phoneNumber),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+
+                //Images
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x54000000),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: PageView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _post.imagesUrl.length,
+                            itemBuilder: (context, index) {
+                              return Image.network(
+                                _post.imagesUrl[index],
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, top: 0, bottom: 3),
-                child: Text(
-                  _post.description,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'roboto',
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal),
                 ),
-              ),
-              IconButton(
-                tooltip: 'Request phone number',
-                icon: const Icon(MdiIcons.phoneOutline),
-                onPressed: () {},
-              ),
-            ],
+                //Description
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                  child: Text(
+                    _post.description,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'roboto',
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class PhoneNumberDialog extends StatelessWidget {
+  final String phoneNumber;
+
+  const PhoneNumberDialog(this.phoneNumber);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'Phone number',
+        style: TextStyle(fontSize: 20),
+      ),
+      content: Text(
+        '$phoneNumber',
+        style: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontSize: 20,
+            ),
+      ),
+      actions: [
+        FlatButton(
+          color: grey,
+          child: Text(
+            'Cancel',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                .copyWith(color: Colors.white),
+          ),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
+        ),
+        FlatButton(
+          color: grey,
+          child: Text(
+            'Call',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                .copyWith(color: Colors.white),
+          ),
+          onPressed: () {
+            launch("tel://$phoneNumber");
+          },
+        ),
+      ],
     );
   }
 }
