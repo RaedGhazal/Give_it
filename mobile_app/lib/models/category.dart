@@ -7,7 +7,7 @@ const categories = [
   'Electronics',
   'Books',
   'Pets accessories',
-  'tools',
+  'Tools',
 ];
 
 const categoriesAssets = {

@@ -52,51 +52,56 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            isSignedIn
-                ? Card(
-                    child: ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Text('Sign out'),
-                      onTap: () async {
-                        signOut();
-                        await Navigator.of(context).maybePop(context);
-                        setState(() {});
-                      },
-                    ),
-                  )
-                : Card(
-                    child: ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Text('Sign-in or Sign-up'),
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUpPage()),
-                        );
+      drawer: StatefulBuilder(
+        builder: (context, setState2) {
+          return Drawer(
+            child: ListView(
+              children: [
+                isSignedIn
+                    ? Card(
+                        child: ListTile(
+                          leading: Icon(Icons.account_circle),
+                          title: Text('Sign out'),
+                          onTap: () async {
+                            signOut();
+                            await Navigator.of(context).maybePop(context);
+                            setState2(() {});
+                          },
+                        ),
+                      )
+                    : Card(
+                        child: ListTile(
+                          leading: Icon(Icons.account_circle),
+                          title: Text('Sign-in or Sign-up'),
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpPage()),
+                            );
 
-                        setState(() {});
-                      },
-                    ),
+                            setState2(() {});
+                          },
+                        ),
+                      ),
+                Card(
+                  child: ListTile(
+                    leading: Icon(Icons.report),
+                    title: Text('licences'),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AboutDialog(
+                          applicationName: 'Give it',
+                        ),
+                      );
+                    },
                   ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.report),
-                title: Text('licences'),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AboutDialog(
-                      applicationName: 'Give it',
-                    ),
-                  );
-                },
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
       floatingActionButton: LemonFloatingButton(_scaffoldKey),
       body: Padding(

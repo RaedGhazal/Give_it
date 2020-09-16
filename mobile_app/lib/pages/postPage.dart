@@ -41,7 +41,7 @@ class _PostPageState extends State<PostPage> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: PostWidget(data[index] , _scaffoldKey),
+                    child: PostWidget(data[index]),
                   );
                 });
           }

@@ -226,9 +226,8 @@ class CategoryWidget extends StatelessWidget {
 
 class PostWidget extends StatelessWidget {
   final Post _post;
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const PostWidget(this._post, this.scaffoldKey);
+  const PostWidget(this._post);
 
   @override
   Widget build(BuildContext context) {
@@ -277,7 +276,7 @@ class PostWidget extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) =>
-                              PhoneNumberDialog(_post.phoneNumber, scaffoldKey),
+                              PhoneNumberDialog(_post.phoneNumber),
                         );
                       },
                     ),
@@ -341,9 +340,8 @@ class PostWidget extends StatelessWidget {
 
 class PhoneNumberDialog extends StatelessWidget {
   final String phoneNumber;
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const PhoneNumberDialog(this.phoneNumber, this.scaffoldKey);
+  const PhoneNumberDialog(this.phoneNumber);
 
   @override
   Widget build(BuildContext context) {

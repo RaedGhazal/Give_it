@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 
 import 'models/account.dart';
 import 'pages/pages.dart';
@@ -23,6 +24,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     print ('Hello ${user?.phoneNumber}');
+    SystemChrome.setEnabledSystemUIOverlays([
+      SystemUiOverlay.top
+    ]);
+
+
   }
 
   @override
