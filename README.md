@@ -12,9 +12,12 @@ Used technologies:
  1. Flutter & Dart for devloping the frontend.
  2. Php & MySql for server api and database.
  3. Firebase for phone authentication.
- 4. How to make a release a build:  Download Android Studio   Download
-    Dart Sdk & Flutter Sdk.  connect the app to firebase.   enable phone
-    authentication.   call the command flutter run --release   the apk
+
+  How to make a release a build:  
+ 1. download Android Studio   Download Dart Sdk & Flutter Sdk.   
+ 2. connect the app to firebase.  
+ 3. enable phone authentication. 
+ 4. call the command flutter run --release   the apk
     will be generated in the following path:
     Give_it\mobile_app\build\app\outputs\apk\release\app-release.apk
 
