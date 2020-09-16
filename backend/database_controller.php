@@ -43,13 +43,23 @@ class DatabaseController
             . " values ('{$postModel->getUserId()}','{$postModel->getCategoryId()}','{$postModel->getSubCategory()}',"
             . "'{$postModel->getDescription()}','{$postModel->getCountry()}','{$postModel->getCity()}')";
         $result = mysqli_query($connection, $query);
-        $this->addImages($connection->insert_id, $postModel->getImages(),$postModel->getUserId());
+        $postModel->setPostId($connection->insert_id);
+        if(!($this->addImages($postModel->getPostId(), $postModel->getImages(),$postModel->getUserId())))
+        {
+            $query = "delete from posts where post_id = '{$postModel->getPostId()}'";
+            mysqli_query($connection,$query);
+            return false;
+        }
         return $result;
     }
     public function addImages(int $post_id, array $images,$userId)
     {
         include 'database_connection.php';
         $urls = $this->uploadImages($images,$userId);
+
+        if(sizeof($urls)===0)
+        return false;
+
         $values = '';
         foreach ($urls as $url) {
             $values .= "('$post_id','$url'),";
@@ -116,7 +126,7 @@ class DatabaseController
         $city = strtolower($city);
         $query = "SELECT DISTINCT(p.category_id) as c_id,c.category_name as c_name FROM posts p 
         left outer JOIN categories c on c.category_id = p.category_id 
-        where country = '$country'";
+        where p.is_removed = 0 and country = '$country'";
         if (strlen($city) > 0 && strtolower($city) != 'all')
             $query .= " and city = '$city'";
 
@@ -169,10 +179,10 @@ class DatabaseController
                 file_put_contents($path, $realImage);
                 $url = "https://" . substr($path, strpos($path, 'raedghazal.com'));
                 $url = substr($url, 0, 23) . '/' . substr($url, 23);
+                $urls[] = $url;
             } else {
                 echo 'this file type ' . $imageName . ' is not supported!';
             }
-            $urls[] = $url;
         }
         return $urls;
     }
