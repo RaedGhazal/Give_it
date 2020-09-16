@@ -27,7 +27,7 @@
             $postModel->setCity($_POST['city']);
 
             $dbController = new DatabaseController;
-            if (!($dbController->checkPhoneAndToken($phoneNumber, $user_token))) {
+            if (!($dbController->checkUserExistence($phoneNumber, $user_token))) {
                 echo 'wrong phone number or token!';
                 return;
             }
@@ -89,6 +89,7 @@
         private $remove_id;
         private $images;
         private $images_urls;
+        private $token;
 
         public function setPostId(int $post_id)
         {

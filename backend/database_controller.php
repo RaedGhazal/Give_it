@@ -2,6 +2,38 @@
 class DatabaseController
 {
 
+
+    public function addUser(String $phoneNumber, String $country, String $token)
+    {
+        if ($this->checkUserExistence($phoneNumber, $token)) {
+            echo 'user already exists';
+            return false;    
+        }
+        if($this->checkPhoneNumberExistence($phoneNumber)){
+            echo 'phone number already in use';
+            return;
+        }
+        if($this->checkTokenExistence($token)){
+            echo 'token already in use';
+            return;
+        }
+        include 'database_connection.php';
+            $query = "insert into users (phone_number,country,token) values ('$phoneNumber','$country','$token')";
+            $result = mysqli_query($connection,$query);
+            return $result;
+    }
+    public function checkPhoneNumberExistence($phoneNumber)
+    {
+        include 'database_connection.php';
+        $query = "select * from users where phone_number = '$phoneNumber'";
+        return mysqli_query($connection,$query)->num_rows;
+    }
+    public function checkTokenExistence($token)
+    {
+        include 'database_connection.php';
+        $query = "select * from users where token = '$token'";
+        return mysqli_query($connection,$query)->num_rows;
+    }
     public function addPost(PostModel $postModel)
     {
         include 'database_connection.php';
@@ -11,13 +43,13 @@ class DatabaseController
             . " values ('{$postModel->getUserId()}','{$postModel->getCategoryId()}','{$postModel->getSubCategory()}',"
             . "'{$postModel->getDescription()}','{$postModel->getCountry()}','{$postModel->getCity()}')";
         $result = mysqli_query($connection, $query);
-        $this->addImages($connection->insert_id, $postModel->getImages());
+        $this->addImages($connection->insert_id, $postModel->getImages(),$postModel->getUserId());
         return $result;
     }
-    public function addImages(int $post_id, array $images)
+    public function addImages(int $post_id, array $images,$userId)
     {
         include 'database_connection.php';
-        $urls = $this->uploadImages($images);
+        $urls = $this->uploadImages($images,$userId);
         $values = '';
         foreach ($urls as $url) {
             $values .= "('$post_id','$url'),";
@@ -108,7 +140,7 @@ class DatabaseController
             $user_id = $result->fetch_assoc()['user_id'];
         return $user_id;
     }
-    public function checkPhoneAndToken(String $phoneNumber, String $token)
+    public function checkUserExistence(String $phoneNumber, String $token)
     {
         include 'database_connection.php';
         $query = "select * from users where phone_number = '$phoneNumber' and token = '$token'";
@@ -122,7 +154,7 @@ class DatabaseController
         $result = mysqli_query($connection, $query);
         return $result;
     }
-    public function uploadImages($images): array
+    public function uploadImages($images,$userId): array
     {
         $urls = array();
         foreach ($images as $image) {
@@ -131,11 +163,12 @@ class DatabaseController
             $realImage = base64_decode($image[0]);
             $imageName = $image[1];
             $fileExtention = strtolower(end(explode(".", $imageName)));
+            $savingImageName = $userId.'image'.uniqid().'.'.$fileExtention;
             if (in_array($fileExtention, $allowedFilesExtentions)) {
-                $path = __DIR__ . "/uploaded_images/$imageName";
+                $path = __DIR__ . "/uploaded_images/$savingImageName";
                 file_put_contents($path, $realImage);
-                $url = "https://".substr($path, strpos($path, 'raedghazal.com'));
-                $url = substr($url, 0,23).'/'.substr($url, 23);
+                $url = "https://" . substr($path, strpos($path, 'raedghazal.com'));
+                $url = substr($url, 0, 23) . '/' . substr($url, 23);
             } else {
                 echo 'this file type ' . $imageName . ' is not supported!';
             }
@@ -144,4 +177,3 @@ class DatabaseController
         return $urls;
     }
 }
-?>
