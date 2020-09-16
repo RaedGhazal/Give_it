@@ -1,10 +1,10 @@
 <?php
-///All php files have been uploaded to my host server, including the following information,
-///but I removed them from here so it doesn't become public to anyone who enters thig github repo
+///All php files have been uploaded to our host server, including the below information,
+///but we have removed the connection information so it doesn't become public
 ///you can still test this code on any other server host (if necessary) by adding the server and database
 ///information below.
 ///if tested on another host server, make sure to create a folder called 'uploaded_images' in the same root
-///and change its read write permission so php can save the uploaded images to the folder when a post is added.
+///and change its read/write permission so php can save the uploaded images to the folder when a post is added.
 $username = '';
 $password = '';
 $host = 'raedghazal.com';
