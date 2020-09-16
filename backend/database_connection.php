@@ -16,7 +16,6 @@ $create_users_table = "CREATE TABLE IF NOT EXISTS users (
     user_id int(10) NOT NULL AUTO_INCREMENT,
     phone_number varchar(25) NOT NULL,
     country varchar(25) DEFAULT NULL,
-    city varchar(32) DEFAULT NULL,
     is_banned tinyint(1) NOT NULL DEFAULT '0',
     ban_id int(3) NOT NULL DEFAULT '0',
     token varchar(30) NOT NULL,
@@ -45,7 +44,7 @@ $create_images_table = "CREATE TABLE IF NOT EXISTS images (
     PRIMARY KEY (image_id)
    )";
 mysqli_query($connection, $create_images_table);
-
+   
 $create_categories_table = "CREATE TABLE IF NOT EXISTS categories (
     category_id int(11) NOT NULL AUTO_INCREMENT,
     category_name varchar(50) NOT NULL,
