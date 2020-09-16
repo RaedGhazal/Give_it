@@ -242,7 +242,7 @@ class _AddPostBodyState extends State<AddPostBody> {
                     }
                   });
 
-                  await Navigator.maybePop(context);
+                  await Navigator.of(context).maybePop(context);
                   showSnackBar(widget.homeScaffoldKey,
                       color: Colors.green,
                       content: 'your post is being processed');

@@ -72,12 +72,10 @@ class _HomePageState extends State<HomePage> {
               Card(
                 child: ListTile(
                   leading: Icon(Icons.account_circle),
-                  title: Text('Sign-in or Sign-up'),
+                  title: Text('Sign out'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
-                    );
+                    signOut();
+                    Navigator.of(context).maybePop(context);
                   },
                 ),
               ),

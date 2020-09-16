@@ -113,7 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 .copyWith(color: Colors.white),
                           ),
                           onPressed: () {
-                            Navigator.maybePop(context);
+                            Navigator.of(context).maybePop(context);
                           },
                         ),
                         FlatButton(

@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'models/account.dart';
+import 'pages/pages.dart';
 import 'pages/pages.dart';
 import 'themes.dart';
 
@@ -282,7 +284,7 @@ class PostWidget extends StatelessWidget {
 
                     Spacer(),
 
-                    //Menu
+                    //Show phone number.
                     IconButton(
                       icon: Icon(MdiIcons.phoneOutline),
                       onPressed: () {
@@ -358,6 +360,20 @@ class PhoneNumberDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!isSignedIn)
+      Scaffold.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+          content: Text('Please sign in first'),
+          action: SnackBarAction(
+              label: 'Sign in',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                );
+              }),
+        ));
+
     return AlertDialog(
       title: Text(
         'Phone number',

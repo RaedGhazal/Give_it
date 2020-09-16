@@ -56,7 +56,8 @@ Future<bool> sendVerificationPhoneMessage(String phoneNumber) async {
     },
 
     verificationFailed: (FirebaseAuthException e) {
-      print('phone verificationFailed');
+      print('phone verificationFailed : ${e}');
+
       result = false;
     },
     codeSent: (verificationId, forceResendingToken) {
