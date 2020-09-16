@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -291,6 +292,37 @@ class PostWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class BigButton extends StatelessWidget {
+  final String text;
+  final Function onTap;
+
+  const BigButton({this.text = '', this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Container(
+        height: 60,
+        padding: EdgeInsets.all(10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: grey,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: GoogleFonts.playfairDisplay(
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 23,
+          ),
+        ),
+      ),
+      onTap: onTap,
     );
   }
 }

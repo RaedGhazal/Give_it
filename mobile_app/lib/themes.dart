@@ -14,6 +14,18 @@ final defaultTheme = ThemeData(
       fontSize: 15,
       fontWeight: FontWeight.bold,
     ),
+    headline1: GoogleFonts.playfairDisplay(
+      color: grey,
+      fontSize: 50,
+      fontWeight: FontWeight.bold,
+    ),
+    headline2: GoogleFonts.playfairDisplay(
+      color: grey,
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+    ),
+    headline5: GoogleFonts.playfairDisplay(
+        color: lightGrey, fontSize: 20, fontWeight: FontWeight.bold),
     headline6: GoogleFonts.playfairDisplay(
       color: lightGrey,
       fontSize: 35,

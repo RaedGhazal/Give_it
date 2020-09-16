@@ -34,20 +34,6 @@ Future<void> addPost({
   print(response.body);
 }
 
-Future<List<Category>> getAllCategories() async {
-  const url = "https://raedghazal.com/giveit_project/categories.php";
-  final response = await http.post(url, body: {"function": "get_all"});
-  Map<String, dynamic> map = json.decode(response.body);
-
-  List<Category> categories = List<Category>();
-
-  map.forEach((key, value) {
-    categories.add(Category(id: int.parse(key), name: value));
-  });
-
-  return categories;
-}
-
 Future<List<Category>> getUsedCategories(
     {String country = 'jordan', String city = ''}) async {
   const url = "https://raedghazal.com/giveit_project/categories.php";
@@ -57,7 +43,6 @@ Future<List<Category>> getUsedCategories(
     'country': country,
     'city': city
   });
-  print(json.decode(response.body));
   var jsonCategories = json.decode(response.body);
   if (jsonCategories is List) return List<Category>();
 
@@ -69,6 +54,15 @@ Future<List<Category>> getUsedCategories(
       asset: Category.getAsset(jsonCategories[id]),
     ));
   }
+
+  // for (int i = 0 ; i < categories.length ; i++)
+  // {
+  //   print(categories[i].name);
+  //   print(categories[i].id);
+  //   print(categories[i].asset);
+  //   print('------------------>');
+  //
+  // }
 
   return categories;
 }
@@ -88,7 +82,6 @@ Future<List<Post>> getPosts(
   print('getposts : $jsonPosts');
   List<Post> posts = List<Post>();
   for (Map p in jsonPosts) {
-    List<String> l = List<String>();
     posts.add(Post(
         id: int.parse(p['post_id']),
         categoryId: int.parse(p['category_id']),

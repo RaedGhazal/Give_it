@@ -15,8 +15,6 @@ class _AddPostBodyState extends State<AddPostBody> {
 
   String category;
 
-  List<Category> downloadedCategories;
-
   final _descriptionKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
 
@@ -107,83 +105,33 @@ class _AddPostBodyState extends State<AddPostBody> {
                 children: [
                   //Category
                   Expanded(
-                    flex: 1,
-                    child: FutureBuilder<List<Category>>(
-                      future: getAllCategories(),
-                      builder: (context, snap) {
-                        if (snap.connectionState == ConnectionState.done) {
-                          final data = snap.data;
-                          if (data == null) {
-                            return Center(
-                              child: Text(snap.error.toString()),
-                            );
-                          }
-
-                          downloadedCategories = data;
-
-                          return StatefulBuilder(
-                            builder: (context, setState2) {
-                              return RoundedDropDownButton(
-                                DropdownButton<String>(
-                                  hint: Text(
-                                    'Category',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  value: category,
-                                  items: <DropdownMenuItem<String>>[
-                                    for (int i = 0; i < data.length; i++)
-                                      DropdownMenuItem<String>(
-                                        value: data[i].name,
-                                        child: Text(
-                                          data[i].name,
-                                          //categoriesAssets.keys.toList()[i],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1,
-                                        ),
-                                      )
-                                  ],
-                                  onChanged: (value) {
-                                    setState2(() {
-                                      category = value;
-                                    });
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        }
-
-                        return RoundedDropDownButton(
-                          DropdownButton<String>(
-                            hint: Text(
-                              'Category',
-                              style: Theme.of(context).textTheme.bodyText1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            value: category,
-                            items: categoriesAssets.keys.map((e) {
-                              return DropdownMenuItem<String>(
-                                value: e,
+                      flex: 1,
+                      child: RoundedDropDownButton(
+                        DropdownButton<String>(
+                          hint: Text(
+                            'Category',
+                            style: Theme.of(context).textTheme.bodyText1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          value: category,
+                          items: <DropdownMenuItem<String>>[
+                            for (int i = 1; i < categories.length; i++)
+                              DropdownMenuItem<String>(
+                                value: categories[i],
                                 child: Text(
-                                  e,
+                                  categories[i],
                                   //categoriesAssets.keys.toList()[i],
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                category = value;
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                              )
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              category = value;
+                            });
+                          },
+                        ),
+                      )),
 
                   const SizedBox(
                     width: 15,
@@ -276,16 +224,7 @@ class _AddPostBodyState extends State<AddPostBody> {
                     phoneNumber: '+962770551747',
                     userToken: 'ABCD',
                     images: images,
-                    categoryId: downloadedCategories
-                        .where((element) {
-                          if (element.name == category) return true;
-                          if (element.name == category) return true;
-
-                          return false;
-                        })
-                        .toList()
-                        .first
-                        .id,
+                    categoryId: categories.indexOf(category),
                     subCategory: _subCategoryController.text.trim(),
                     country: 'jordan',
                     city: location.governorate,
@@ -315,25 +254,41 @@ class _AddPostBodyState extends State<AddPostBody> {
         ],
       );
     } else {
-      return Row(
+      return ListView(
+        padding: EdgeInsets.only(
+            top: 150, left: 60, right: 60),
         children: [
-          Expanded(
-            child: FlatButton(
-              child: Text(
-                'Sign in',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .copyWith(color: Colors.white),
-              ),
-              color: grey,
-              onPressed: () async {
-                await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignUpPage()));
-                setState(() {});
-              },
+          Center(
+            child: Text(
+              'Please sign-in first',
+              style:
+                  Theme.of(context).textTheme.headline6.copyWith(fontSize: 25),
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: FlatButton(
+                  child: Text(
+                    'Sign in',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .copyWith(color: Colors.white),
+                  ),
+                  color: grey,
+                  onPressed: () async {
+                    await Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()));
+                    setState(() {});
+                  },
+                ),
+              ),
+            ],
+          )
         ],
       );
     }
