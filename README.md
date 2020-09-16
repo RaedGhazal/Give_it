@@ -1,4 +1,3 @@
-
 # Give_it
 
 An application where people give what they don't want anymore to ohter who is in need for these things.
@@ -14,10 +13,11 @@ Used technologies:
  3. Firebase for phone authentication.
 
   How to make a release a build:  
- 1. download Android Studio   Download Dart Sdk & Flutter Sdk.   
- 2. connect the app to firebase.  
- 3. enable phone authentication. 
- 4. call the command flutter run --release   the apk
+ 1. download Android Studio   
+ 2. Download Dart Sdk & Flutter Sdk.   
+ 3. connect the app to firebase.  
+ 4. enable phone authentication. 
+ 5. call the command flutter run --release   the apk
     will be generated in the following path:
     Give_it\mobile_app\build\app\outputs\apk\release\app-release.apk
 
