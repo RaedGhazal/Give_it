@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'category.dart';
 import 'post.dart';
 
+//Completed
 Future<void> addPost({
   @required String phoneNumber,
   @required String userToken,
@@ -34,6 +35,7 @@ Future<void> addPost({
   print(response.body);
 }
 
+//Completed
 Future<List<Category>> getUsedCategories(
     {String country = 'jordan', String city = ''}) async {
   const url = "https://raedghazal.com/giveit_project/categories.php";
@@ -54,19 +56,10 @@ Future<List<Category>> getUsedCategories(
       asset: Category.getAsset(jsonCategories[id]),
     ));
   }
-
-  // for (int i = 0 ; i < categories.length ; i++)
-  // {
-  //   print(categories[i].name);
-  //   print(categories[i].id);
-  //   print(categories[i].asset);
-  //   print('------------------>');
-  //
-  // }
-
   return categories;
 }
 
+//Completed
 Future<List<Post>> getPosts(
     {String country, String city, int categoryId}) async {
   const url = 'https://raedghazal.com/giveit_project/posts.php';
@@ -76,10 +69,8 @@ Future<List<Post>> getPosts(
     'city': city,
     'category_id': categoryId?.toString() ?? ''
   });
-  print('Input : country = $country , city = $city , categoryId = $categoryId');
 
   List jsonPosts = json.decode(response.body);
-  print('getposts : $jsonPosts');
   List<Post> posts = List<Post>();
   for (Map p in jsonPosts) {
     posts.add(Post(
@@ -94,7 +85,17 @@ Future<List<Post>> getPosts(
         phoneNumber: p['phone_number']));
   }
 
-  print('posts: $posts');
-
   return posts;
+}
+
+//Completed
+Future addUser({String phoneNumber, String country, String token}) async {
+  const url = "https://raedghazal.com/giveit_project/users.php";
+  final response = await http.post(url, body: {
+    "function": "add",
+    "phone_number": phoneNumber,
+    "country": country,
+    "token": token
+  });
+  print(response.body);
 }

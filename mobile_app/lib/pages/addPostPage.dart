@@ -197,8 +197,9 @@ class _AddPostBodyState extends State<AddPostBody> {
                     return;
                   }
 
-                  _descriptionKey.currentState.validate();
-                  _subCategoryKey.currentState.validate();
+                  if (!_descriptionKey.currentState.validate()) return;
+
+                  if (!_subCategoryKey.currentState.validate()) return;
 
                   if (category == null) {
                     showSnackBar(widget.scaffoldKey,
@@ -219,10 +220,9 @@ class _AddPostBodyState extends State<AddPostBody> {
                       filePickerResult.files[i].name
                     ]);
 
-                  //TODO: TEST ONLY , FIX IT.
                   addPost(
-                    phoneNumber: '+962770551747',
-                    userToken: 'ABCD',
+                    phoneNumber: user.phoneNumber,
+                    userToken: user.uid,
                     images: images,
                     categoryId: categories.indexOf(category),
                     subCategory: _subCategoryController.text.trim(),
@@ -255,8 +255,7 @@ class _AddPostBodyState extends State<AddPostBody> {
       );
     } else {
       return ListView(
-        padding: EdgeInsets.only(
-            top: 150, left: 60, right: 60),
+        padding: EdgeInsets.only(top: 150, left: 60, right: 60),
         children: [
           Center(
             child: Text(

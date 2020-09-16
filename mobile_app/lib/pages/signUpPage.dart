@@ -82,7 +82,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text('Verify phone number' , style: TextStyle(fontSize: 25),),
+                      title: Text(
+                        'Verify phone number',
+                        style: TextStyle(fontSize: 25),
+                      ),
                       content: Form(
                         key: _verifyPhoneKey,
                         child: TextFormField(
@@ -128,8 +131,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
                             if (await verifyPhoneNumber(
                                 _verifyPhoneController.text.trim())) {
-                              //TODO: call ADD USER.
-                              //addUser();
+                              addUser(
+                                phoneNumber: user.phoneNumber,
+                                country: 'jordan',
+                                token: user.uid,
+                              );
 
                               while (await Navigator.of(context).maybePop());
                             } else {
